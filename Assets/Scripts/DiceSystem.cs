@@ -30,7 +30,7 @@ public class DiceSystem : MonoBehaviour{
 
 
     private bool IsDiceStopped(){
-        return diceRb.velocity == Vector3.zero && diceRb.angularVelocity == Vector3.zero;
+        return (diceRb.velocity == Vector3.zero && diceRb.angularVelocity == Vector3.zero);
     }
 
 
