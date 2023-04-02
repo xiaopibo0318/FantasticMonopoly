@@ -21,13 +21,10 @@ public class DiceSystem : MonoBehaviour{
     }
 
     private void Dice_Init(){
-        float random1 = Random.Range(0, 360);
-        float random2 = Random.Range(1, 5);
-        float random3 = Random.Range(1, 5);
-        dice.transform.rotation = Quaternion.Euler(random1, random1, random1);
-        diceRb.velocity = new Vector3(random2, random2, random2);
+        dice.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+        diceRb.velocity = new Vector3(Random.Range(1, 5), Random.Range(1, 5), Random.Range(1, 5));
         diceRb.maxAngularVelocity = 1000;
-        Vector3 torque = new Vector3(random3, random3, random3);
+        Vector3 torque = new Vector3(Random.Range(1, 5), Random.Range(1, 5), Random.Range(1, 5));
         diceRb.AddTorque(torque, ForceMode.VelocityChange);
     }
 
@@ -45,5 +42,4 @@ public class DiceSystem : MonoBehaviour{
         Debug.Log($"目前得數值為{maxIndex + 1}");
         return (maxIndex + 1);
     }
-
 }

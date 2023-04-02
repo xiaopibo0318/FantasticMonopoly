@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
     }
 
     public void ViewSwitch(string name){
-        switch name{
+        switch (name){
             case "overLook":
                 cameras[0].transform.position = overLookP;
                 cameras[0].transform.localEulerAngles = overLookR;
