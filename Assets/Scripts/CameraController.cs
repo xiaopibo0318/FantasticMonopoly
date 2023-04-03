@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     private static readonly Vector3 targetPos = new Vector3(-271, 0, -661);
 
 
-    [Header("Camera®y¼Ð")]
+    [Header("Cameraåº§æ¨™")]
     private Vector3 offset = new Vector3(270, 150, 0);
     private Vector3 overLookP = new Vector3(0, 5000, 0);
     private Vector3 overLookR = new Vector3(90, 0, 0);

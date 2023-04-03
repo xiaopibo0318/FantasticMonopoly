@@ -39,7 +39,7 @@ public class DiceSystem : MonoBehaviour{
         for (int i = 0; i < diceFaceList.Count; i++){
             if (diceFaceList[i].position.y > diceFaceList[maxIndex].position.y) maxIndex = i;
         }
-        Debug.Log($"�ثe�o�ƭȬ�{maxIndex + 1}");
+        Debug.Log($"目前得數值為{maxIndex + 1}");
         return (maxIndex + 1);
     }
 }

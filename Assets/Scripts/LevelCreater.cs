@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelCreater : Singleton<LevelCreater>{
-    [Header("¦a¹Ï«H®§")]
+    [Header("åœ°åœ–ä¿¡æ¯")]
     [SerializeField] private GameObject groundPrefab;
     [SerializeField] private float groundOffset;
     [SerializeField] private Transform groundParent;
