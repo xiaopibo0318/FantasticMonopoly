@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     public static CameraController Instance;
 
     [SerializeField] private List<GameObject> cameras = new List<GameObject>();
-
+    
     private void Awake(){
         if (Instance == null){
             Instance = this;
