@@ -10,8 +10,8 @@ public class DiceSystem : MonoBehaviour{
     private int diceNum = 0;
 
     private void Start(){
-        diceRb = dice.GetComponent<Rigidbody>();
         Dice_Init();
+        Roll_Dice();
     }
 
     private void FixedUpdate(){
@@ -21,6 +21,10 @@ public class DiceSystem : MonoBehaviour{
     }
 
     private void Dice_Init(){
+        diceRb = dice.GetComponent<Rigidbody>();
+    }
+
+    private void Roll_Dice(){
         dice.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
         diceRb.velocity = new Vector3(Random.Range(1, 5), Random.Range(1, 5), Random.Range(1, 5));
         diceRb.maxAngularVelocity = 1000;
