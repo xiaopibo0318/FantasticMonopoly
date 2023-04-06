@@ -4,16 +4,23 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class ElementManager : MonoBehaviour{
-    private string Element;
+    class Element{
+        string type;
+        string color;
+
+        void Element(string elementType, string elementColor){
+            type =  elementType;
+            color = elementColor;
+        }
+    }
      
 
     public void InitElement(){
-        if (this.Element != null){
-            return;
-        }
-        string[] AllowedElements = {"metal", "wood", "aqua", "fire", "earth"};
-        this.Element = AllowedElements[Random.Range(0, AllowedElements.Length)];
-
+        string[] AllowedType = {"metal", "wood", "aqua", "fire", "earth"};
+        string[] AllowedColor = {"Yellow", "Green", "Blue", "Red", "Brown"};
+        int rand = Random.Range(0, AllowedType.Length);
+        Element = new Element(AllowedType[rand], AllowedColor[rand]);
+    }
 }
 
 /*

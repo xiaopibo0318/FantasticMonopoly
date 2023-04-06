@@ -52,7 +52,7 @@
         "temp/":true,
         "Temp/":true
     },
-    "workbench.colorTheme": "Kawaii Theme",
+    "workbench.colorTheme": "Monokai",
     "workbench.startupEditor": "welcomePage",
     "workbench.preferredHighContrastColorTheme": "Default High Contrast"
 }
