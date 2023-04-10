@@ -41,15 +41,15 @@ public class CameraController : MonoBehaviour
             case "overLook":
                 cameras[0].transform.position = overLookP;
                 cameras[0].transform.localEulerAngles = overLookR;
-                return;
+                break;
             case "backLook":
                 cameras[0].transform.position = target.transform.position + offset;
                 cameras[0].transform.localEulerAngles = backLookR;
-                return;
+                break;
             case "frontLook":
                 cameras[0].transform.position = frontLookP;
                 cameras[0].transform.localEulerAngles = frontLookR;
-                return;
+                break;
         }
     }
 
