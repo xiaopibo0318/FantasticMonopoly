@@ -72,3 +72,8 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 .vscode/settings.json
+.idea/.idea.FantasticMonopoly/.idea/.gitignore
+.idea/.idea.FantasticMonopoly/.idea/encodings.xml
+.gitignore
+.idea/.idea.FantasticMonopoly/.idea/vcs.xml
+.idea/.idea.FantasticMonopoly/.idea/indexLayout.xml
