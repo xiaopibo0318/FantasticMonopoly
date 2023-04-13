@@ -1,24 +1,19 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using PlayerManager;
-using MapManager;
 using CellManager;
 
 namespace ElementManager{
     public class Element{
-        public readonly string type;
+        public string type;
         public string color;
-        public readonly int id;
+        public int id;
         
         public readonly string[] allowedType = new string[] { "Wood", "Fire", "Earth", "Metal", "Aqua" };
         public readonly string[] allowedColor = new string[] {"Green", "Red", "Brown", "Yellow", "Blue"};
 
         public Element(int elementId){
-            id = elementId;
-            type =  allowedType[id];
-            color = allowedColor[id];
+            this.id = elementId;
+            this.type =  allowedType[id];
+            this.color = allowedColor[id];
         }
     }
 

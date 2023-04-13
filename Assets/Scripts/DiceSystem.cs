@@ -12,9 +12,9 @@ namespace DiceSystem{
     public class Dice{
         public int id;
         public string name;
-        public static GameObject gameObj;
-        public Rigidbody rigidbd = gameObj.GetComponent<Rigidbody>();
-        public List<Transform> faces = new List<Transform>(6);
+        private static GameObject gameObj;
+        private static Rigidbody rigidbd = gameObj.GetComponent<Rigidbody>();
+        private List<Transform> faces = new List<Transform>(6);
         public int result;
 
         private bool IsStopped(){
