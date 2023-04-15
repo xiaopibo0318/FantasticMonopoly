@@ -54,7 +54,7 @@ public class DiceSystem : MonoBehaviour
         {
             if (diceFaceList[i].position.y > diceFaceList[maxIndex].position.y) maxIndex = i;
         }
-        Debug.Log($"目前得數值為{maxIndex + 1}");
+        //Debug.Log($"目前得數值為{maxIndex + 1}");
         return (maxIndex + 1);
     }
 
