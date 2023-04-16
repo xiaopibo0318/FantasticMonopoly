@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/CreateShapeScene.unity
     guid: 362dd2a03398e524dbe8c3d992b7052c
+  - enabled: 1
+    path: Assets/Scenes/LobbyAndRoom.unity
+    guid: 8e639361dc831794193638ee02d611df
+  - enabled: 1
+    path: Assets/Scenes/MainGame.unity
+    guid: 9957e3c2681e877409c60ba940b5266c
   m_configObjects: {}
