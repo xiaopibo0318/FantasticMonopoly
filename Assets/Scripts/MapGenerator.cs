@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MapGenerator : Singleton<MapGenerator>
 {
-    [Header("¦a§Îª«¥ó")]
+    [Header("åœ°å½¢ç‰©ä»¶")]
     [SerializeField] GameObject[] groundList;
     [SerializeField] Transform groundParent;
 
@@ -20,7 +20,7 @@ public class MapGenerator : Singleton<MapGenerator>
             Instantiate(groundList[index], pos, Quaternion.identity, groundParent);
             offset += 100;
         }
-        Debug.Log($"«Ø¸m§¹²¦");
+        Debug.Log($"å»ºç½®å®Œç•¢");
     }
 
 }
