@@ -5,8 +5,8 @@ using ItemManager;
 
 namespace InventoryManager{
     public class Inventory{
-        public int maximumInvSize;
-        public List<Item> inv = new List<Item>();
+        public const int maximumInvSize = 8;
+        public List<Item> inv = new List<Item>(maximumInvSize);
 
         public void Add(Item item){
             inv.Add(item);
@@ -20,7 +20,7 @@ namespace InventoryManager{
                 //Item 404
                 return;
             }
-            item.Use(item.name);
+            item.Use(item.id);
         }
     }
 

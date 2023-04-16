@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace ItemManager{
     public class Item{
+        public int id;
         public string name;
         public string lore;
         
-        public void Use(string name){
-            switch (name){
-                case "ItemName":
+        public void Use(int input){
+            switch (input){
+                case 0:
                     //Item private function
                     break;
             }

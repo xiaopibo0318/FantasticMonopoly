@@ -32,25 +32,29 @@ namespace ElementManager{
             }
             int effect = count; 
             switch (effect){
-                case 0:
+                case 0: // e.g."Wood" - "Wood"
                     //ask insert tokens
                     break;
-                case 1:
+                case 1: // e.g."Wood" - "Fire"
                     cell.token += 2;
                     player.tokens[player.element] -= 1;
+                    player.tokens[cell.element] += 2;
                     player.CheckIsFoul();
                     break;
-                case 2:
+                case 2: // e.g."Wood" - "Earth"
                     cell.token -= 1;
+                    player.tokens[cell.element] -= 1;
                     cell.IsTokenEmpty();
                     break;
-                case 3: 
+                case 3: // e.g."Wood" - "Metal"
                     player.tokens[player.element] += 2;
                     cell.token -= 1;
+                    player.tokens[cell.element] -= 2;
                     cell.IsTokenEmpty();
                     break;
-                case 4:
+                case 4: // e.g."Wood" - "Aqua"
                     player.tokens[player.element] -= 1;
+                    player.tokens[cell.element] += 1;
                     player.CheckIsFoul();
                     break;
             }

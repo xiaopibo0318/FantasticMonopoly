@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class RoomManager : MonoBehaviour
 {
-    [Header("Title????")]
+    [Header("Title�e�����")]
     [SerializeField] private Button goToRoomButton;
 
-    [Header("Round???")]
+    [Header("Round���H��")]
     public readonly int[] roundNum = { 3, 5, 8, 10 };
     int nowRoundIndex;
     [SerializeField] private Text roundText;

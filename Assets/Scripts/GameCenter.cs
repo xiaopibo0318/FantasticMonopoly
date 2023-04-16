@@ -6,7 +6,7 @@ public class GameCenter : Singleton<GameCenter>
 {
     private void Start()
     {
-        Instance.TimeManager.Instance.Delay(1, () => SceneHandler.Instance.GoToNextScene("LobbyAndRoom"));
+        TimeManager.Instance.Delay(1, () => SceneHandler.Instance.GoToNextScene("LobbyAndRoom"));
     }
 
 }

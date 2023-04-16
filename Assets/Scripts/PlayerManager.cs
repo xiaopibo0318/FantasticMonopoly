@@ -15,7 +15,7 @@ namespace PlayerManager{
             {new Element(2), 0},
             {new Element(3), 0},
             {new Element(4), 0}
-         };
+        };
 
         public void Walk(int amount){
             position += amount;
