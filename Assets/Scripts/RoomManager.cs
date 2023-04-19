@@ -67,8 +67,17 @@ public class RoomManager : MonoBehaviour
     private void StartGame()
     {
         SceneHandler.Instance.GoToNextScene("MainGame");
-        TimeManager.Instance.Delay(1, () => MapGenerator.Instance.MapGenerate());
+        TimeManager.Instance.Delay(1, () => LoadMainGame());
 
     }
+
+    private void LoadMainGame()
+    {
+        MapGenerator.Instance.MapGenerate();
+        PlayerController.Instance.LoadGame();
+        UiController.Instance.totalRound = roundNum[nowRoundIndex];
+    }
+
+
 
 }

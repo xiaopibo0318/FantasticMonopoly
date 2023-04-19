@@ -23,15 +23,17 @@ public class CameraController : MonoBehaviour
 
     [Header("Camera®y¼Ð")]
     private Vector3 offset = new Vector3(270, 150, 0);
-    private Vector3 overLookP = new Vector3(0, 5000, 0);
+    private Vector3 overLookP = new Vector3(0, 150, 0);
     private Vector3 overLookR = new Vector3(90, 0, 0);
-    private Vector3 frontLookP = new Vector3(-200, 150, 0);
+    private Vector3 frontLookP = new Vector3(0, 0, 40);
     private Vector3 frontLookR = new Vector3(0, 180, 0);
     private Vector3 backLookR = new Vector3(0, 0, 0);
     private void Start()
     {
         //target.transform.position = targetPos;
         cameras[0].transform.position = target.transform.position + offset;
+        cameras[0].gameObject.SetActive(true);
+        cameras[1].gameObject.SetActive(false);
         ViewSwitch("backLook");
     }
 
@@ -53,14 +55,24 @@ public class CameraController : MonoBehaviour
             cameras[0].transform.position = frontLookP;
             cameras[0].transform.localEulerAngles = frontLookR;
         }
+        else if (name.Contains("Dice"))
+        {
+            cameras[0].gameObject.SetActive(false);
+            cameras[1].gameObject.SetActive(true);
+        }
+        else if (name.Contains("Main"))
+        {
+            cameras[1].gameObject.SetActive(false);
+            cameras[0].gameObject.SetActive(true);
+        }
     }
 
 
     private void MouseEvent()
     {
-        
+
     }
 
-    
+
 
 }

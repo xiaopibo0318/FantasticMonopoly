@@ -3,28 +3,30 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DiceSystem : MonoBehaviour
+public class DiceSystem : Singleton<DiceSystem>
 {
     [SerializeField] private GameObject dice;
     [SerializeField] private List<Transform> diceFaceList;
     private static Rigidbody diceRb;
     private int diceNum = 0;
 
+    Coroutine coroutine;
+
     private void Start()
     {
         diceRb = dice.GetComponent<Rigidbody>();
-        Dice_Init();
+        //Roll();
     }
 
-    private void FixedUpdate()
+
+    public void RollDice()
     {
-        if (IsDiceStopped())
-        {
-            diceNum = FindDiceResult();
-        }
+        if (coroutine != null) { StopCoroutine(coroutine); }
+        coroutine = null;
+        coroutine = StartCoroutine(Rolling());
     }
 
-    private void Dice_Init()
+    private IEnumerator Rolling()
     {
         float random1 = Random.Range(0, 360);
         float random2 = Random.Range(1, 5);
@@ -34,6 +36,12 @@ public class DiceSystem : MonoBehaviour
         diceRb.maxAngularVelocity = 1000;
         Vector3 torque = new Vector3(random3, random3, random3);
         diceRb.AddTorque(torque, ForceMode.VelocityChange);
+
+        while (!IsDiceStopped())
+        {
+            yield return null;
+        }
+        diceNum = FindDiceResult();
     }
 
 
