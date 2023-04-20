@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using ElementManager;
-using InventoryManager;
+//using InventoryManager;
 
 namespace PlayerManager{
 

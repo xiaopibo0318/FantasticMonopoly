@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class TimeManager : Singleton<TimeManager>{
+    
     Coroutine nowCoroutine = null;
 
     public void Delay(float time, UnityAction action = null)
