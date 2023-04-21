@@ -17,14 +17,8 @@ public class SwitchRoomManager : Singleton<SwitchRoomManager>
         for (int i = 0; i < gameObjectsList.Length; i++)
         {
             gameObjectsList[i].SetActive(false);
-        }
-        for (int i = 0; i < gameObjectsList.Length; i++)
-        {
             if (gameObjectsList[i].name == name)
-            {
                 gameObjectsList[i].SetActive(true);
-            }
         }
-
     }
 }
