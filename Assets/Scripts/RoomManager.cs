@@ -12,21 +12,23 @@ using System.Text;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     [Header("Title")]
-    [SerializeField] Button goToLobbyButton;
+    [SerializeField] Button buttonJoinLobby;
 
     [Header("Lobby")]
-    [SerializeField] Button createRoomButton;
-    [SerializeField] Button joinRoomButton;
+    [SerializeField] Button buttonCreateRoom;
+    [SerializeField] Button buttonJoinRoom;
     [SerializeField] TextMeshProUGUI inputRoomName;
     [SerializeField] TextMeshProUGUI inputPlayerName;
     [SerializeField] TextMeshProUGUI textRoomList;
 
     [Header("Room")]
-    [SerializeField] Button goBackButton;
-    [SerializeField] Text roundText;
-    [SerializeField] Button leftRoundButton;
-    [SerializeField] Button rightRoundButton;
-    [SerializeField] Button startGameButton;
+    [SerializeField] TextMeshProUGUI textRoomName;
+    [SerializeField] TextMeshProUGUI textPlayerList;
+    [SerializeField] Button leaveRoomButton;
+    [SerializeField] TextMeshProUGUI textRound;
+    [SerializeField] Button buttonLeftRound;
+    [SerializeField] Button buttonRightRound;
+    [SerializeField] Button buttonStartGame;
 
     public readonly int[] roundNum = { 3, 5, 8, 10 };
     int nowRoundIndex;
@@ -47,15 +49,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private void ButtonInit()
     {
         // login
-        goToLobbyButton.onClick.AddListener(JoinLobby);
+        buttonJoinLobby.onClick.AddListener(JoinLobby);
         // lobby
-        createRoomButton.onClick.AddListener(CreateRoom);
-        joinRoomButton.onClick.AddListener(JoinRoom);
+        buttonCreateRoom.onClick.AddListener(CreateRoom);
+        buttonJoinRoom.onClick.AddListener(_JoinRoom);
         // room
-        goBackButton.onClick.AddListener(() => SwitchRoomManager.Instance.SwitchView("Title"));
-        leftRoundButton.onClick.AddListener(() => ChangeStatus("Round", -1));
-        rightRoundButton.onClick.AddListener(() => ChangeStatus("Round", 1));
-        startGameButton.onClick.AddListener(() => StartGame());
+        leaveRoomButton.onClick.AddListener(leaveRoom);
+        buttonLeftRound.onClick.AddListener(() => ChangeStatus("Round", -1));
+        buttonRightRound.onClick.AddListener(() => ChangeStatus("Round", 1));
+        buttonStartGame.onClick.AddListener(StartGame);
     }
 
     private void JoinLobby()
@@ -83,7 +85,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         switch (name)
         {
             case "Round":
-                roundText.text = roundNum[nowRoundIndex].ToString();
+                textRound.text = roundNum[nowRoundIndex].ToString();
                 break;
         }
     }
@@ -137,7 +139,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             print("Invalid RoomName or PlayerName!");
     }
 
-    public void JoinRoom()
+    public void _JoinRoom()
     {
         string roomName = GetRoomName();
         string playerName = GetPlayerName();
@@ -156,6 +158,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom != null)
         {
             SwitchRoomManager.Instance.SwitchView("Room");
+            if (PhotonNetwork.CurrentRoom == null)
+                SwitchRoomManager.Instance.SwitchView("Lobby");
+            else
+            {
+                textRoomName.text = PhotonNetwork.CurrentRoom.Name;
+                UpdatePlayerList();
+            }
+            buttonStartGame.interactable = PhotonNetwork.IsMasterClient;
         }
         else
         {
@@ -173,6 +183,41 @@ public class RoomManager : MonoBehaviourPunCallbacks
             }
         }
         textRoomList.text = sb.ToString();
+    }
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        buttonStartGame.interactable = PhotonNetwork.IsMasterClient;
+    }
+
+    public void UpdatePlayerList()
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (var kvp in PhotonNetwork.CurrentRoom.Players)
+        {
+            sb.AppendLine("->" + kvp.Value.NickName);
+        }
+        textPlayerList.text = sb.ToString();
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        UpdatePlayerList();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        UpdatePlayerList();
+    }
+
+    public void leaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+        SwitchRoomManager.Instance.SwitchView("Lobby");
+    }
+
+    public override void OnLeftRoom()
+    {
+        SwitchRoomManager.Instance.SwitchView("Lobby");
     }
 
 }
