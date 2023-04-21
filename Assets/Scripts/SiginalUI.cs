@@ -10,7 +10,6 @@ public class SiginalUI : MonoBehaviour
     public Text siginalText;
     public Button confirm;
     public Button dontDo;
-    public GameObject panel;
     private UnityAction nextAction;
     private Coroutine coroutine;
 
@@ -27,7 +26,7 @@ public class SiginalUI : MonoBehaviour
     }
 
 
-    public void SiginalText(string myText, int signalTime = 3, int textFontSize = 50, bool canSkip = true)
+    public void SiginalText(string myText, int signalTime = 5, int textFontSize = 20, bool canSkip = true)
     {
         if (canSkip == true) skipButton.gameObject.SetActive(true);
         else skipButton.gameObject.SetActive(false);
@@ -40,31 +39,31 @@ public class SiginalUI : MonoBehaviour
         coroutine = StartCoroutine(CloseSignal(signalTime));
     }
 
-    public void TextInterectvie(string myText, UnityAction unityAction1 = null, UnityAction unityAction2 = null)
-    {
-        siginalContent.SetActive(true);
-        siginalText.text = myText;
-        confirm.gameObject.SetActive(true);
-        dontDo.gameObject.SetActive(true);
-        nextAction = unityAction1;
-        confirm.onClick.AddListener(delegate { ExecuteOptionYes(nextAction); });
-        UnityAction temp = unityAction2;
-        dontDo.onClick.AddListener(delegate { ExecuteOptionNo(temp); });
-    }
+    //public void TextInterectvie(string myText, UnityAction unityAction1 = null, UnityAction unityAction2 = null)
+    //{
+    //    siginalContent.SetActive(true);
+    //    siginalText.text = myText;
+    //    confirm.gameObject.SetActive(true);
+    //    dontDo.gameObject.SetActive(true);
+    //    nextAction = unityAction1;
+    //    confirm.onClick.AddListener(delegate { ExecuteOptionYes(nextAction); });
+    //    UnityAction temp = unityAction2;
+    //    dontDo.onClick.AddListener(delegate { ExecuteOptionNo(temp); });
+    //}
 
 
-    private void ExecuteOptionYes(UnityAction unityAction = null)
-    {
-        ResetSiginal();
-        unityAction?.Invoke();
-        nextAction = null;
-    }
-    private void ExecuteOptionNo(UnityAction unityAction = null)
-    {
-        ResetSiginal();
-        unityAction?.Invoke();
-        nextAction = null;
-    }
+    //private void ExecuteOptionYes(UnityAction unityAction = null)
+    //{
+    //    ResetSiginal();
+    //    unityAction?.Invoke();
+    //    nextAction = null;
+    //}
+    //private void ExecuteOptionNo(UnityAction unityAction = null)
+    //{
+    //    ResetSiginal();
+    //    unityAction?.Invoke();
+    //    nextAction = null;
+    //}
 
     IEnumerator CloseSignal(float delayTime)
     {
@@ -83,9 +82,8 @@ public class SiginalUI : MonoBehaviour
         coroutine = null;
         siginalContent.SetActive(false);
         siginalText.text = "";
-        confirm.gameObject.SetActive(false);
-        dontDo.gameObject.SetActive(false);
-        panel.SetActive(false);
+        //confirm.gameObject.SetActive(false);
+        //dontDo.gameObject.SetActive(false);
     }
 
 
@@ -94,7 +92,7 @@ public class SiginalUI : MonoBehaviour
         StopCoroutine(coroutine);
         coroutine = null;
         SiginalUI.Instance.ResetSiginal();
-        //skipButton.gameObject.SetActive(false);
+        skipButton.gameObject.SetActive(false);
     }
 
 }
