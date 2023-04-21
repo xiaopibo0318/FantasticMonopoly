@@ -42,6 +42,7 @@ public class DiceSystem : Singleton<DiceSystem>
             yield return null;
         }
         diceNum = FindDiceResult();
+        AfterDiceDone();
     }
 
 
@@ -62,8 +63,16 @@ public class DiceSystem : Singleton<DiceSystem>
         {
             if (diceFaceList[i].position.y > diceFaceList[maxIndex].position.y) maxIndex = i;
         }
-        //Debug.Log($"目前得數值為{maxIndex + 1}");
         return (maxIndex + 1);
+    }
+
+
+    private void AfterDiceDone()
+    {
+        SiginalUI.Instance.SiginalText("玩家A骰到 " + diceNum.ToString());
+        CameraController.Instance.ViewSwitch("Main");
+        CameraController.Instance.ViewSwitch("backLook");
+        PlayerController.Instance.PlayerWalk(diceNum);
     }
 
 }
