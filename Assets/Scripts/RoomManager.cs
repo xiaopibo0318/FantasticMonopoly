@@ -7,10 +7,7 @@ using Photon.Pun;
 
 public class RoomManager : MonoBehaviour
 {
-    [Header("Title inform")]
-    [SerializeField] private Button goToRoomButton;
 
-    [Header("Round inform")]
     public readonly int[] roundNum = { 3, 5, 8, 10 };
     int nowRoundIndex;
     [SerializeField] private Text roundText;

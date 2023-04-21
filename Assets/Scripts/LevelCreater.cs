@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class LevelCreater : Singleton<LevelCreater>
-{
-    [Header("¶aπœ´HÆß")]
+public class LevelCreater : Singleton<LevelCreater>{
+    [Header("Âú∞Âúñ‰ø°ÊÅØ")]
     [SerializeField] private GameObject groundPrefab;
     [SerializeField] private float groundOffset;
     [SerializeField] private Transform groundParent;
@@ -13,8 +12,7 @@ public class LevelCreater : Singleton<LevelCreater>
 
 
 
-    private void LoadLevel1()
-    {
+    private void LoadLevel1(){
         Vector3 nowPos = Vector3.zero;
         Quaternion nowR = Quaternion.identity;
         Instantiate(groundPrefab, nowPos, nowR, groundParent);

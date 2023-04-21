@@ -519,7 +519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -15.000011, y: -45}
+  m_AnchoredPosition: {x: -15, y: -45}
   m_SizeDelta: {x: 66.54651, y: 30}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &424254192
@@ -996,7 +996,6 @@ MonoBehaviour:
   backLookButton: {fileID: 1369441954}
   diceButton: {fileID: 1513401535}
   roundText: {fileID: 1865405155}
-  totalRound: 0
 --- !u!1001 &701722848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1010,15 +1009,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8a9c634a83568be458051e91b48ff938, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8a9c634a83568be458051e91b48ff938, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8a9c634a83568be458051e91b48ff938, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8a9c634a83568be458051e91b48ff938, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2047,7 +2046,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 636d5c975633e0f4682f4b1e3ff7f1c0, type: 2}
+  - {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2325,7 +2324,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -15.000011, y: -135}
+  m_AnchoredPosition: {x: -15, y: -135}
   m_SizeDelta: {x: 66.54651, y: 30}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1838787212
@@ -2455,7 +2454,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2487,7 +2486,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 238.52, y: 153}
+  m_AnchoredPosition: {x: 257.97, y: 164}
   m_SizeDelta: {x: 114.468, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2049962869

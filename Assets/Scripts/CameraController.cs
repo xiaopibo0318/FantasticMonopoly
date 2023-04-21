@@ -18,20 +18,17 @@ public class CameraController : MonoBehaviour
 
 
     [SerializeField] private GameObject target;
-    private static readonly Vector3 targetPos = new Vector3(-271, 0, -661);
 
 
     [Header("Camera®y¼Ð")]
-    private Vector3 offset = new Vector3(270, 150, 0);
-    private Vector3 overLookP = new Vector3(0, 150, 0);
+    private Vector3 offset = new Vector3(0, 180, -135);
+    private Vector3 overLookP = new Vector3(400, 1000, 200);
     private Vector3 overLookR = new Vector3(90, 0, 0);
     private Vector3 frontLookP = new Vector3(0, 0, 40);
     private Vector3 frontLookR = new Vector3(0, 180, 0);
-    private Vector3 backLookR = new Vector3(0, 0, 0);
+    private Vector3 backLookR = new Vector3(45, 0, 0);
     private void Start()
     {
-        //target.transform.position = targetPos;
-        cameras[0].transform.position = target.transform.position + offset;
         cameras[0].gameObject.SetActive(true);
         cameras[1].gameObject.SetActive(false);
         ViewSwitch("backLook");

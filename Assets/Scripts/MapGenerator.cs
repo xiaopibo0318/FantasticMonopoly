@@ -2,25 +2,33 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MapManager;
 
 public class MapGenerator : Singleton<MapGenerator>
 {
-    [Header("地形物件")]
+    [Header("Ground Object")]
     [SerializeField] GameObject[] groundList;
     [SerializeField] Transform groundParent;
 
+    //[Header("Map Size")]
+    //Dictionary<string, int> mapSize = new Dictionary<string, int>()
+    //{{"S",15},{"M",25 },{"L",35 }};
 
-    public void MapGenerate(int groundSum = 20)
+
+
+
+    public void MapGenerate()
     {
         int offset = 150;
-        for (int i = 0; i < groundSum; i++)
+        var mapSize = new MapSize();
+        for (int i = 0; i < mapSize.mapDictS.Length; i++)
         {
             int index = Random.Range(0, groundList.Length);
-            Vector3 pos = new Vector3(offset, 0, 0) + groundList[index].transform.position;
+            //Vector3 pos = new Vector3(offset, 0, 0) + groundList[index].transform.position;
+            Vector3 pos = (mapSize.mapDictS[i] * offset) + groundList[index].transform.position;
             Instantiate(groundList[index], pos, Quaternion.identity, groundParent);
-            offset += 100;
         }
-        Debug.Log($"建置完畢");
+        Debug.Log($"Build Succeed");
     }
 
 }

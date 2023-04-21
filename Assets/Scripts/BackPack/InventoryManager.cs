@@ -15,7 +15,6 @@ public class InventoryManager : Singleton<InventoryManager>
 
     private void OnEnable()
     {
-
         RefreshItem();
         //Instance.itemInformation.text = "";
     }
@@ -81,10 +80,12 @@ public class InventoryManager : Singleton<InventoryManager>
         for (int i = 0; i < Instance.myBag.itemList.Count; i++)
         {
             //小於1的數量刪掉
+
             if (Instance.myBag.itemList[i] != null)
             {
                 if (Instance.myBag.itemList[i].itemHave < 1)
                 {
+                    //Instance.myBag.itemList.RemoveAt(i);
                     Instance.myBag.itemList[i] = null;
                 }
             }
@@ -113,34 +114,33 @@ public class InventoryManager : Singleton<InventoryManager>
 
     public void SubItem(Item thisItem, int num = 1)
     {
-        if (myBag.itemList.Contains(thisItem))
-        {
-            thisItem.itemHave -= num;
-        }
-        else
-        {
-            return;
-        }
+        if (!myBag.itemList.Contains(thisItem)) return;
+        thisItem.itemHave -= num;
+        RefreshItem();
 
+        if (!myBag.itemList.Contains(thisItem)) return;
+        thisItem.itemHave -= num;
+        
         RefreshItem();
     }
 
     public bool IsBagFull()
     {
-        var Count = 0;
-        for (int i = 0; i < 8; i++)
-        {
-            if (Instance.myBag.itemList[i] == null)
-            {
-                return false;
-            }
-            else
-            {
-                Count += 1;
-            }
-        }
-        if (Count == 8) return true;
-        else return false;
+        return Instance.myBag.itemList.Count == 8;
+        // var Count = 0;
+        // for (int i = 0; i < 8; i++)
+        // {
+        //     if (Instance.myBag.itemList[i] == null)
+        //     {
+        //         return false;
+        //     }
+        //     else
+        //     {
+        //         Count += 1;
+        //     }
+        // }
+        // if (Count == 8) return true;
+        // else return false;
     }
 
     public bool CheckBagFull()
