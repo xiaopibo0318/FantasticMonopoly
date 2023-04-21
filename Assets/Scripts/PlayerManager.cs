@@ -5,7 +5,7 @@ using ElementManager;
 namespace PlayerManager{
 
     public class Player{
-        public Element element;    
+        public ElementManager.Element element;  
         public bool isFoul = false;
         public int position = 0;
         public Inventory inventory = new Inventory();
