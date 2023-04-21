@@ -6,7 +6,6 @@ public class SceneHandler : Singleton<SceneHandler>
 {
     public void GoToNextScene(string name)
     {
-        //SceneManager.LoadScene(2);
         SceneManager.LoadScene(name);
     }
 }
