@@ -12,12 +12,17 @@ public class UiController : Singleton<UiController>
     [SerializeField] private Button diceButton;
 
     [SerializeField] private Text roundText;
-    [HideInInspector] public int totalRound { get; set; }
+    public int totalRound { get; set; }
 
     private void Start()
     {
         InitButton();
-        roundText.text = "回合數： 0 / " + totalRound.ToString();
+    }
+
+
+    public void UpdateInfo(int x = 0)
+    {
+        roundText.text = "回合數：" + x + " / " + totalRound.ToString();
     }
 
 

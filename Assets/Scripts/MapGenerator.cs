@@ -6,6 +6,7 @@ using MapManager;
 using static UnityEditor.PlayerSettings;
 using System;
 using System.Reflection;
+using PlayerManager;
 
 public class MapGenerator : Singleton<MapGenerator>
 {
@@ -18,7 +19,7 @@ public class MapGenerator : Singleton<MapGenerator>
     //[Header("Map Size")]
     //Dictionary<string, int> mapSize = new Dictionary<string, int>()
     //{{"S",15},{"M",25 },{"L",35 }};
-
+    int offset = 150;
 
     public void MapGenerate(Map map = null)
     {
@@ -27,7 +28,7 @@ public class MapGenerator : Singleton<MapGenerator>
             Debug.Log($"Map Generate Fail, cause map is null");
             return;
         }
-        int offset = 150;
+
         var mapSize = new MapSize();
         for (int i = 0; i < mapSize.mapDictS.Length; i++)
         {
@@ -43,6 +44,19 @@ public class MapGenerator : Singleton<MapGenerator>
             }
         }
         Debug.Log($"Build Succeed");
+    }
+
+
+    public void UpdateCeil(Map map, int targetIndex, Player player)
+    {
+        Debug.Log($"is special? :{map.cells[targetIndex].isSpecial}, index is{targetIndex}, playElementId is{player.element.id}");
+        var mapSize = new MapSize();
+        if (map.cells[targetIndex].isSpecial == false)
+        {
+            int nowElementID = player.element.id;
+            Vector3 pos = (mapSize.mapDictS[targetIndex] * offset) + groundList[nowElementID].transform.position;
+            Instantiate(groundList[nowElementID], pos, Quaternion.identity, groundParent);
+        }
     }
 
 }

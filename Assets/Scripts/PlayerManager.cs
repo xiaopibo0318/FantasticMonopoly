@@ -48,8 +48,8 @@ namespace PlayerManager
                 }
             }
             if (targetKey != null) { tokens[targetKey] += tokenAmount; }
-            else { Debug.Log("Fail To set TokenNum , because of targetKey is null"); }
-
+            else { Debug.Log("Fail To set TokenNum , because targetKey is null"); }
+            this.element = targetKey;
         }
     }
 }

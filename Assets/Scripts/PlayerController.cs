@@ -2,6 +2,7 @@ using MapManager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -23,15 +24,19 @@ public class PlayerController : Singleton<PlayerController>
     {
         CameraController.Instance.ViewSwitch("overLook");
         Debug.Log($"NowIndex is {nowPosIndex}");
-        for (int i = nowPosIndex; i < nowPosIndex + amount; i++)
+        var posOffset = new Vector3(0, 50, 0);
+        for (int i = 0; i < amount; i++)
         {
             yield return new WaitForSeconds(1);
-            player.transform.position = (mapSize.mapDictS[(nowPosIndex + i) % 16] * 150);
+            Debug.Log($"nowPos is {(nowPosIndex + 1 + i) % 16}");
+            player.transform.position = (mapSize.mapDictS[(nowPosIndex + 1 + i) % 16] * 150) + posOffset;
         }
         nowPosIndex += amount;
         Debug.Log($"AfterGoIndex is {nowPosIndex}");
         CameraController.Instance.ViewSwitch("backLook");
+        GameController.Instance.UpdateCeil();
     }
 
+    public int NowPos() { return nowPosIndex % 16; }
 
 }

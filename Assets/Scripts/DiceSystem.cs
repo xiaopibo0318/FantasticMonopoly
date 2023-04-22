@@ -73,6 +73,8 @@ public class DiceSystem : Singleton<DiceSystem>
         CameraController.Instance.ViewSwitch("Main");
         CameraController.Instance.ViewSwitch("backLook");
         PlayerController.Instance.PlayerWalk(diceNum);
+        
     }
+
 
 }

@@ -35,7 +35,7 @@ namespace MapManager
         public Map(int mapSize, float specialToNormalRatio)
         {
             InitNormalCells(mapSize);
-            int numOfSpecialCells = (int)Math.Round(size * specialToNormalRatio);
+            int numOfSpecialCells = (int)Math.Round(size * specialToNormalRatio) - 1;
             SetSpecialCells(numOfSpecialCells);
         }
 
