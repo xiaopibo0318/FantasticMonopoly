@@ -26,7 +26,7 @@ public class PlayerController : Singleton<PlayerController>
         for (int i = nowPosIndex; i < nowPosIndex + amount; i++)
         {
             yield return new WaitForSeconds(1);
-            player.transform.position = (mapSize.mapDictS[nowPosIndex + i] * 150);
+            player.transform.position = (mapSize.mapDictS[(nowPosIndex + i) % 16] * 150);
         }
         nowPosIndex += amount;
         Debug.Log($"AfterGoIndex is {nowPosIndex}");

@@ -44,11 +44,12 @@ namespace MapManager
             InitNormalCells(mapSize);
             SetSpecialCells(numOfSpecialCells);
         }
+
     }
 
 
     /// <summary>
-    /// Define 3 size of Map with Small(15), Midium(25), Large(35),
+    /// Define 3 size of Map with Small(16), Midium(25), Large(35),
     /// </summary>
     public class MapSize
     {
@@ -59,6 +60,7 @@ namespace MapManager
             new Vector3(4, 0, 0), new Vector3(3, 0, 0), new Vector3(2, 0, 0), new Vector3(1, 0, 0)
         };
     }
+
 
 
 }

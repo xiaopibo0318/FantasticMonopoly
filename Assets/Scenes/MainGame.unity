@@ -174,6 +174,8 @@ MonoBehaviour:
   - {fileID: 791135891399928955, guid: 70b0eb60d92b0be4cb227f4c6820b00d, type: 3}
   - {fileID: 526228109556816306, guid: f32e02540a090534bb183230373c2d69, type: 3}
   groundParent: {fileID: 998279839}
+  normalCell: {fileID: 7555230033265998241, guid: 74baa164df162c042b286d4d2f45b29c, type: 3}
+  specitalCell: {fileID: 1279989756952587866, guid: af7d7b098890f3d4eb41a9dd1a3e1d0b, type: 3}
 --- !u!1 &165698463
 GameObject:
   m_ObjectHideFlags: 0

@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 219311254}
   - component: {fileID: 219311253}
   - component: {fileID: 219311255}
+  - component: {fileID: 219311256}
   m_Layer: 0
   m_Name: GameCenter
   m_TagString: Untagged
@@ -279,6 +280,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce2d7c6e64bab274da7b751dd431fd9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &219311256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219311252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb157e3659fea7499e9ce7b78819cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &423027151
