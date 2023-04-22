@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-using TMPro;
 using Photon.Realtime;
-using System.Text;
+using TMPro;
 
 
 
@@ -192,9 +193,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void UpdatePlayerList()
     {
         StringBuilder sb = new StringBuilder();
-        foreach (var kvp in PhotonNetwork.CurrentRoom.Players)
+        List<Player> sortedPlayerList = PhotonNetwork.CurrentRoom.Players.Values.OrderBy(player => player.ActorNumber).ToList();
+        foreach (Player player in sortedPlayerList)
         {
-            sb.AppendLine("->" + kvp.Value.NickName);
+            sb.AppendLine("->" + player.NickName);
         }
         textPlayerList.text = sb.ToString();
     }
