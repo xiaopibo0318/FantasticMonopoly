@@ -2,6 +2,12 @@ using UnityEngine;
 using PlayerManager;
 using MapManager;
 using Photon.Pun;
+using UnityEngine.Events;
+using System.Collections.Generic;
+using UnityEditor;
+using System.Collections;
+using System.Security.Cryptography.X509Certificates;
+using Unity.VisualScripting;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
@@ -10,9 +16,12 @@ public class GameController : MonoBehaviourPunCallbacks
     private Map map = null;
     [SerializeField] private GameObject playerPrefab;
     public int nowDiceIndex { get; set; }
-    public int totalRound;
+    public int totalRound { get; set; }
 
     public static GameController Instance;
+
+    public List<string> playerNameList = new List<string>();
+
 
     private void Awake()
     {
@@ -20,10 +29,6 @@ public class GameController : MonoBehaviourPunCallbacks
         else Destroy(this);
     }
 
-    private void Start()
-    {
-        
-    }
 
 
     /// <summary>
@@ -35,13 +40,27 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
 
+    /// <summary>
+    /// All player execute this function
+    /// </summary>
     public void CreateNewGame()
     {
         CreatePlayer();
         player1 = new Player(2, 10); // ElmentID = 0, tokenNum = 10;
+
+    }
+
+    /// <summary>
+    /// Only room keeper execute this function
+    /// </summary>
+    public void InitGame()
+    {
         map = new Map(16, 0.25f); // Small Map
         MapGenerator.Instance.MapGenerate(map);
+        gameCoroutine = StartCoroutine(GameCycle());
+
     }
+
 
     public void UpdateCeil()
     {
@@ -58,4 +77,48 @@ public class GameController : MonoBehaviourPunCallbacks
         }
     }
 
+    public void AddNameList(string name)
+    {
+        playerNameList.Add(name);
+    }
+
+
+    #region GameCycle Region
+    public bool playerFinish { get; set; }
+    public string nowPlayer;
+    Coroutine gameCoroutine = null;
+    private IEnumerator GameCycle()
+    {
+        int x = 3;
+        playerFinish = false;
+        while (x > 0)
+        {
+            for (int i = 0; i < playerNameList.Count; i++) // i is player in active
+            {
+                Debug.Log($"Now Player Name is:{playerNameList[i]}");
+                if (PhotonNetwork.LocalPlayer.NickName == playerNameList[i])
+                {
+                    UiController.Instance.DiceButtonInteractable(true);
+                }
+                else { UiController.Instance.DiceButtonInteractable(false); }
+
+                if (!playerFinish)
+                {
+                    Debug.Log("Player didn't finished");
+                    yield return new WaitUntil(() => playerFinish);
+                    Debug.Log("Player finished");
+                }
+                playerFinish = false;
+            }
+            x--;
+        }
+        Debug.Log("End Game");
+        SiginalUI.Instance.SiginalText("End Game");
+    }
+    #endregion
+
+
+
 }
+
+// 流程控管 -> 道具是否使用 -> 骰子是否使用 -> 

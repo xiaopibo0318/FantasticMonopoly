@@ -36,9 +36,13 @@ public class UiController : Singleton<UiController>
             CameraController.Instance.ViewSwitch("Dice");
             DiceSystem.Instance.RollDice();
         });
+        diceButton.interactable = false;
     }
 
 
-
+    public void DiceButtonInteractable(bool b)
+    {
+        diceButton.interactable = b;
+    }
 
 }

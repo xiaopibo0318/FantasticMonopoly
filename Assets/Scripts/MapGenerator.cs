@@ -6,8 +6,9 @@ using MapManager;
 using System;
 using System.Reflection;
 using PlayerManager;
+using Photon.Pun;
 
-public class MapGenerator : Singleton<MapGenerator>
+public class MapGenerator : MonoBehaviourPunCallbacks
 {
     [Header("Ground Object")]
     [SerializeField] GameObject[] groundList;
@@ -19,6 +20,14 @@ public class MapGenerator : Singleton<MapGenerator>
     //Dictionary<string, int> mapSize = new Dictionary<string, int>()
     //{{"S",15},{"M",25 },{"L",35 }};
     int offset = 150;
+
+    public static MapGenerator Instance;
+    private void Awake()
+    {
+        Instance = this;
+
+    }
+
 
     public void MapGenerate(Map map = null)
     {
@@ -34,12 +43,14 @@ public class MapGenerator : Singleton<MapGenerator>
             if (map.cells[i].isSpecial)
             {
                 Vector3 pos = (mapSize.mapDictS[i] * offset) + specitalCell.transform.position;
-                Instantiate(specitalCell, pos, Quaternion.identity, groundParent);
+                var myObject = PhotonNetwork.Instantiate(specitalCell.name, pos, Quaternion.identity, 0);
+                myObject.transform.SetParent(groundParent);
             }
             else
             {
                 Vector3 pos = (mapSize.mapDictS[i] * offset) + normalCell.transform.position;
-                Instantiate(normalCell, pos, Quaternion.identity, groundParent);
+                var myObject = PhotonNetwork.Instantiate(normalCell.name, pos, Quaternion.identity, 0);
+                myObject.transform.SetParent(groundParent);
             }
         }
         Debug.Log($"Build Succeed");
@@ -54,7 +65,8 @@ public class MapGenerator : Singleton<MapGenerator>
         {
             int nowElementID = player.element.id;
             Vector3 pos = (mapSize.mapDictS[targetIndex] * offset) + groundList[nowElementID].transform.position;
-            Instantiate(groundList[nowElementID], pos, Quaternion.identity, groundParent);
+            var myObject = PhotonNetwork.Instantiate(groundList[nowElementID].name, pos, Quaternion.identity, 0);
+            myObject.transform.SetParent(groundParent);
         }
     }
 

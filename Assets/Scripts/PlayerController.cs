@@ -4,31 +4,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Photon.Pun;
-using TMPro.Examples;
+using TMPro;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject player;
+    [SerializeField] private TextMeshPro playerName;
 
     private int nowPosIndex;
     MapSize mapSize = new MapSize();
+    PhotonView pv;
 
     public static PlayerController LocalPlayerInstance; //Local Instance
 
+    public enum PlayerGameState
+    {
+        Menu, Item, Dice, Move, End
+    }
+
+
     private void Awake()
     {
-        if (photonView.IsMine) // use Photon to distinguish the player you control
+        pv = this.gameObject.GetComponent<PhotonView>();
+        if (pv.IsMine) // use Photon to distinguish the player you control
         {
             LocalPlayerInstance = this;
         }
-        DontDestroyOnLoad(this);
-        
     }
+
+
 
 
     private void Start()
     {
-
+        UpdateName();
     }
 
 
@@ -42,6 +51,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private IEnumerator GoWalk(int amount)
     {
+        SiginalUI.Instance.SiginalText(pv.Owner.NickName + amount.ToString());
         CameraController.Instance.ViewSwitch("overLook");
         Debug.Log($"NowIndex is {nowPosIndex}");
         var posOffset = new Vector3(0, 50, 0);
@@ -55,8 +65,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Debug.Log($"AfterGoIndex is {nowPosIndex}");
         CameraController.Instance.ViewSwitch("backLook");
         GameController.Instance.UpdateCeil();
+        GameController.Instance.playerFinish = true;
     }
 
     public int NowPos() { return nowPosIndex % 16; }
+
+    private void UpdateName()
+    {
+        player.gameObject.name = "Player" + pv.Owner.NickName;
+        playerName.text = pv.Owner.NickName;
+        GameController.Instance.AddNameList(pv.Owner.NickName);
+    }
 
 }
