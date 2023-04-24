@@ -7,7 +7,7 @@ using UnityEngine;
 namespace PlayerManager
 {
 
-    public class Player
+    public class PlayerInfo
     {
         public Element element;
         public bool isFoul = false;
@@ -34,7 +34,7 @@ namespace PlayerManager
             return true;
         }
 
-        public Player(int elementId, int tokenAmount) //This part couldn't use, 
+        public PlayerInfo(int elementId, int tokenAmount) //This part couldn't use, 
         {
             //element = new Element(elementId); // because the element is new, so it won't be found.
             //tokens[element] += tokenAmount;   // this will error: keynotfoundexception

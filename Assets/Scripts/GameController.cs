@@ -8,11 +8,12 @@ using UnityEditor;
 using System.Collections;
 using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
+using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
     [Header("All Game Info")]
-    private Player player1 = null;
+    private PlayerInfo player1 = null;
     private Map map = null;
     [SerializeField] private GameObject playerPrefab;
     public int nowDiceIndex { get; set; }
@@ -46,7 +47,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public void CreateNewGame()
     {
         CreatePlayer();
-        player1 = new Player(2, 10); // ElmentID = 0, tokenNum = 10;
+        player1 = new PlayerInfo(2, 10); // ElmentID = 0, tokenNum = 10;
 
     }
 
@@ -57,7 +58,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         map = new Map(16, 0.25f); // Small Map
         MapGenerator.Instance.MapGenerate(map);
-        gameCoroutine = StartCoroutine(GameCycle());
+       // gameCoroutine = StartCoroutine(GameCycle());
 
     }
 
@@ -65,7 +66,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public void UpdateCeil()
     {
         nowDiceIndex = PlayerController.LocalPlayerInstance.NowPos();
-        MapGenerator.Instance.UpdateCeil(map, nowDiceIndex, player1);
+        //MapGenerator.Instance.UpdateCeil(map, nowDiceIndex, player1);
     }
 
     private void CreatePlayer()
@@ -83,42 +84,43 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
 
-    #region GameCycle Region
-    public bool playerFinish { get; set; }
-    public string nowPlayer;
-    Coroutine gameCoroutine = null;
-    private IEnumerator GameCycle()
-    {
-        int x = 3;
-        playerFinish = false;
-        while (x > 0)
-        {
-            for (int i = 0; i < playerNameList.Count; i++) // i is player in active
-            {
-                Debug.Log($"Now Player Name is:{playerNameList[i]}");
-                if (PhotonNetwork.LocalPlayer.NickName == playerNameList[i])
-                {
-                    UiController.Instance.DiceButtonInteractable(true);
-                }
-                else { UiController.Instance.DiceButtonInteractable(false); }
+    // #region GameCycle Region
+    // public bool playerFinish { get; set; }
+    // Coroutine gameCoroutine = null;
+    // private IEnumerator GameCycle()
+    // {
+    //     int x = 3;
+    //     playerFinish = false;
+    //     while (x > 0)
+    //     {
+    //         for (int i = 0; i < playerNameList.Count; i++) // i is player in active
+    //         {
+    //             HashTable table = new HashTable();
+    //             table.Add("whoseTurn", playerNameList[i]);
+    //             Debug.Log($"Now Player Name is:{playerNameList[i]}");
+    //             if (PhotonNetwork.LocalPlayer.NickName == playerNameList[i])
+    //             {
+    //                 UiController.Instance.DiceButtonInteractable(true);
+    //             }
+    //             else { UiController.Instance.DiceButtonInteractable(false); }
 
-                if (!playerFinish)
-                {
-                    Debug.Log("Player didn't finished");
-                    yield return new WaitUntil(() => playerFinish);
-                    Debug.Log("Player finished");
-                }
-                playerFinish = false;
-            }
-            x--;
-        }
-        Debug.Log("End Game");
-        SiginalUI.Instance.SiginalText("End Game");
-    }
-    #endregion
+    //             if (!playerFinish)
+    //             {
+    //                 Debug.Log("Player didn't finished");
+    //                 yield return new WaitUntil(() => playerFinish);
+    //                 Debug.Log("Player finished");
+    //             }
+    //             playerFinish = false;
+    //         }
+    //         x--;
+    //     }
+    //     Debug.Log("End Game");
+    //     SiginalUI.Instance.SiginalText("End Game");
+    // }
+    //#endregion
 
 
 
 }
 
-// ¬yµ{±±ºÞ -> ¹D¨ã¬O§_¨Ï¥Î -> »ë¤l¬O§_¨Ï¥Î -> 
+// ï¿½yï¿½{ï¿½ï¿½ï¿½ï¿½ -> ï¿½Dï¿½ï¿½Oï¿½_ï¿½Ï¥ï¿½ -> ï¿½ï¿½lï¿½Oï¿½_ï¿½Ï¥ï¿½ -> 

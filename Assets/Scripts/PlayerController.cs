@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Photon.Pun;
 using TMPro;
+using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -65,7 +66,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Debug.Log($"AfterGoIndex is {nowPosIndex}");
         CameraController.Instance.ViewSwitch("backLook");
         GameController.Instance.UpdateCeil();
-        GameController.Instance.playerFinish = true;
+        GameCycleControler.Instance.playerFinish = true;
+        HashTable table = new HashTable();
+        table.Add("playerFinish", GameCycleControler.Instance.playerFinish);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(table);
     }
 
     public int NowPos() { return nowPosIndex % 16; }
@@ -74,7 +78,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         player.gameObject.name = "Player" + pv.Owner.NickName;
         playerName.text = pv.Owner.NickName;
-        GameController.Instance.AddNameList(pv.Owner.NickName);
     }
 
 }
