@@ -101,7 +101,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private void LoadMainGame()
     {
         GameController.Instance.CreateNewGame();
-        PlayerController.Instance.LoadGame();
+        PlayerController.LocalPlayerInstance.LoadGame();
         UiController.Instance.totalRound = roundNum[nowRoundIndex];
         UiController.Instance.UpdateInfo();
         GameController.Instance.totalRound = roundNum[nowRoundIndex];

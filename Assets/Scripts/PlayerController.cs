@@ -3,13 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Photon.Pun;
+using TMPro.Examples;
 
-public class PlayerController : Singleton<PlayerController>
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject player;
 
     private int nowPosIndex;
     MapSize mapSize = new MapSize();
+
+    public static PlayerController LocalPlayerInstance; //Local Instance
+
+    private void Awake()
+    {
+        if (photonView.IsMine) // use Photon to distinguish the player you control
+        {
+            LocalPlayerInstance = this;
+        }
+        DontDestroyOnLoad(this);
+        
+    }
+
+
+    private void Start()
+    {
+
+    }
 
 
     public void LoadGame()

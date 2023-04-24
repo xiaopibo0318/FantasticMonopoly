@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MapManager;
-using static UnityEditor.PlayerSettings;
 using System;
 using System.Reflection;
 using PlayerManager;

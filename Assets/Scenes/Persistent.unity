@@ -294,6 +294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb157e3659fea7499e9ce7b78819cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 6163860090468530316, guid: d824d36462d032145a9caade59bfc37e, type: 3}
+  totalRound: 0
 --- !u!1 &423027151
 GameObject:
   m_ObjectHideFlags: 0
