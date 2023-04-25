@@ -2,7 +2,6 @@ using System;
 //using System.Numerics;
 using CellManager;
 using UnityEngine;
-
 namespace MapManager
 {
     public class Map
@@ -39,13 +38,8 @@ namespace MapManager
             SetSpecialCells(numOfSpecialCells);
         }
 
-        public Map(int mapSize, int numOfSpecialCells)
-        {
-            InitNormalCells(mapSize);
-            SetSpecialCells(numOfSpecialCells);
-        }
-
     }
+    
 
 
     /// <summary>

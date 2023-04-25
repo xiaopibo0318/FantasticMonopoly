@@ -7,6 +7,8 @@ using System;
 using System.Reflection;
 using PlayerManager;
 using Photon.Pun;
+using Photon.Realtime;
+using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class MapGenerator : MonoBehaviourPunCallbacks
 {
@@ -57,18 +59,44 @@ public class MapGenerator : MonoBehaviourPunCallbacks
     }
 
 
-    public void UpdateCeil(Map map, int targetIndex, PlayerInfo player)
+    // public void UpdateCeil(Map map, int targetIndex, PlayerInfo player)
+    // {
+    //     Debug.Log($"is special? :{map.cells[targetIndex].isSpecial}, index is{targetIndex}, playElementId is{player.element.id}");
+    //     var mapSize = new MapSize();
+    //     if (map.cells[targetIndex].isSpecial == false)
+    //     {
+    //         int nowElementID = player.element.id;
+    //         Vector3 pos = (mapSize.mapDictS[targetIndex] * offset) + groundList[nowElementID].transform.position;
+    //         var myObject = PhotonNetwork.Instantiate(groundList[nowElementID].name, pos, Quaternion.identity, 0);
+    //         myObject.transform.SetParent(groundParent);
+    //     }
+    // }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
     {
-        Debug.Log($"is special? :{map.cells[targetIndex].isSpecial}, index is{targetIndex}, playElementId is{player.element.id}");
-        var mapSize = new MapSize();
-        if (map.cells[targetIndex].isSpecial == false)
+        Debug.Log("detect map Update => targetPlayer : " + targetPlayer.NickName);
+        foreach (DictionaryEntry entry in changedProps)
+            Debug.Log(" key : " + entry.Key + " value :  "+ entry.Value);
+        if(!(changedProps.ContainsKey("playerElement") && changedProps.ContainsKey("playerFinish") && changedProps.ContainsKey("playerPos")))
+            return;
+
+        int targetIndex = (int)changedProps["playerPos"];
+
+        if(PhotonNetwork.IsMasterClient)
         {
-            int nowElementID = player.element.id;
-            Vector3 pos = (mapSize.mapDictS[targetIndex] * offset) + groundList[nowElementID].transform.position;
-            var myObject = PhotonNetwork.Instantiate(groundList[nowElementID].name, pos, Quaternion.identity, 0);
-            myObject.transform.SetParent(groundParent);
+            Map map = GameController.Instance.map;
+            var mapSize = new MapSize();
+            if (map.cells[targetIndex].isSpecial == false)
+            {
+                int nowElementID = (int)changedProps["playerElement"];
+                Vector3 pos = (mapSize.mapDictS[targetIndex] * offset) + groundList[nowElementID].transform.position;
+                var myObject = PhotonNetwork.Instantiate(groundList[nowElementID].name, pos, Quaternion.identity, 0);
+                myObject.transform.SetParent(groundParent);
+            }
         }
+        
     }
+
 
 }
 

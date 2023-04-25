@@ -1,6 +1,7 @@
 using UnityEngine;
 using PlayerManager;
 using MapManager;
+using System.Linq;
 using Photon.Pun;
 using UnityEngine.Events;
 using System.Collections.Generic;
@@ -8,13 +9,14 @@ using UnityEditor;
 using System.Collections;
 using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
+using Photon.Realtime;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
     [Header("All Game Info")]
-    private PlayerInfo player1 = null;
-    private Map map = null;
+    public PlayerInfo player1 = null;
+    public Map map = null;
     [SerializeField] private GameObject playerPrefab;
     public int nowDiceIndex { get; set; }
     public int totalRound { get; set; }
@@ -47,8 +49,19 @@ public class GameController : MonoBehaviourPunCallbacks
     public void CreateNewGame()
     {
         CreatePlayer();
-        player1 = new PlayerInfo(2, 10); // ElmentID = 0, tokenNum = 10;
-
+        List<Player> sortedPlayerList = PhotonNetwork.CurrentRoom.Players.Values.OrderBy(player => player.ActorNumber).ToList();
+        
+        int i = 2;
+        foreach (Player player in sortedPlayerList)
+        {
+            if(player.NickName == PhotonNetwork.LocalPlayer.NickName)
+            {
+                player1 = new PlayerInfo(i, 10);// ElmentID = 0, tokenNum = 10;
+            }
+            i++;
+        }
+        
+        
     }
 
     /// <summary>
@@ -82,6 +95,8 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         playerNameList.Add(name);
     }
+
+
 
 
     // #region GameCycle Region

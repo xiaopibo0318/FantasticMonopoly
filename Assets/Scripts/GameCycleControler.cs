@@ -44,6 +44,7 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
     private IEnumerator GameCycle()
     {
         int x = 3;
+        Debug.Log("totalRound = " + GameController.Instance.totalRound);
         playerFinish = false;
         for (int i = 0; i < playerNameList.Count; i++) 
         {
@@ -62,9 +63,9 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
 
                 if (!playerFinish)
                 {
-                    Debug.Log("Player didn't finished");
+                    Debug.Log("Player" + playerNameList[i] + " didn't finished");
                     yield return new WaitUntil(() => playerFinish);
-                    Debug.Log("Player finished");
+                    Debug.Log("Player" + playerNameList[i] + "finished");
                 }
                 playerFinish = false;
             }
@@ -75,6 +76,14 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
     {
+        Debug.Log("In player finish detect");
+        foreach (DictionaryEntry entry in changedProps)
+        {
+            Debug.Log( "targetPlayer : " + targetPlayer.NickName + " key :  " + entry.Key + " value :  "+ entry.Value);
+        }
+
+        if(!(changedProps.ContainsKey("playerFinish")))
+            return;
         if(targetPlayer.NickName != PhotonNetwork.LocalPlayer.NickName){
             playerFinish = (bool)changedProps["playerFinish"];
             changedProps["playerFinish"] = false;

@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         GameController.Instance.UpdateCeil();
         GameCycleControler.Instance.playerFinish = true;
         HashTable table = new HashTable();
+        table.Add("playerElement", GameController.Instance.player1.element.id);
+        table.Add("playerPos", nowPosIndex);
         table.Add("playerFinish", GameCycleControler.Instance.playerFinish);
         PhotonNetwork.LocalPlayer.SetCustomProperties(table);
     }

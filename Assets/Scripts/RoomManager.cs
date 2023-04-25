@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using HashTable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 
 
@@ -93,6 +94,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private void StartGame()
     {
+        HashTable table = new HashTable();
+        table.Add("totalRound", roundNum[nowRoundIndex]);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+        GameController.Instance.totalRound = roundNum[nowRoundIndex];
         SceneHandler.Instance.GoToNextScene("MainGame");
         TimeManager.Instance.Delay(1, () => LoadMainGame());
 
@@ -103,7 +108,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
         GameController.Instance.InitGame();
         UiController.Instance.totalRound = roundNum[nowRoundIndex];
         UiController.Instance.UpdateInfo();
-        GameController.Instance.totalRound = roundNum[nowRoundIndex];
+    }
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
+    {
+        if(GameController.Instance.totalRound == (int)changedProps["totalRound"])
+            return;
+        GameController.Instance.totalRound = (int)changedProps["totalRound"];
     }
 
 
