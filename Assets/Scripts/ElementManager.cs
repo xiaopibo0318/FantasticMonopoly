@@ -18,7 +18,7 @@ namespace ElementManager{
     }
 
     public class ElementManager{
-        public void Reaction(Player player, Cell cell){
+        public void Reaction(PlayerInfo player, Cell cell){
             int idx = player.element.id;
             int count = 0;
             while (true){

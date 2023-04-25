@@ -69,10 +69,12 @@ public class DiceSystem : Singleton<DiceSystem>
 
     private void AfterDiceDone()
     {
-        SiginalUI.Instance.SiginalText("ª±®aA»ë¨ì " + diceNum.ToString());
+        
         CameraController.Instance.ViewSwitch("Main");
         CameraController.Instance.ViewSwitch("backLook");
-        PlayerController.Instance.PlayerWalk(diceNum);
+        PlayerController.LocalPlayerInstance.PlayerWalk(diceNum);
+        
     }
+
 
 }

@@ -2,7 +2,6 @@ using System;
 //using System.Numerics;
 using CellManager;
 using UnityEngine;
-
 namespace MapManager
 {
     public class Map
@@ -35,20 +34,16 @@ namespace MapManager
         public Map(int mapSize, float specialToNormalRatio)
         {
             InitNormalCells(mapSize);
-            int numOfSpecialCells = (int)Math.Round(size * specialToNormalRatio);
+            int numOfSpecialCells = (int)Math.Round(size * specialToNormalRatio) - 1;
             SetSpecialCells(numOfSpecialCells);
         }
 
-        public Map(int mapSize, int numOfSpecialCells)
-        {
-            InitNormalCells(mapSize);
-            SetSpecialCells(numOfSpecialCells);
-        }
     }
+    
 
 
     /// <summary>
-    /// Define 3 size of Map with Small(15), Midium(25), Large(35),
+    /// Define 3 size of Map with Small(16), Midium(25), Large(35),
     /// </summary>
     public class MapSize
     {
@@ -59,6 +54,7 @@ namespace MapManager
             new Vector3(4, 0, 0), new Vector3(3, 0, 0), new Vector3(2, 0, 0), new Vector3(1, 0, 0)
         };
     }
+
 
 
 }
