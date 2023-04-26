@@ -3,11 +3,14 @@ using PlayerManager;
 using MapManager;
 using System.Linq;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using UnityEditor;
+using System.Collections;
+using System.Security.Cryptography.X509Certificates;
+using Unity.VisualScripting;
+using Photon.Realtime;
 using HashTable = ExitGames.Client.Photon.Hashtable;
-using ElementManager;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
@@ -20,8 +23,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public static GameController Instance;
 
-    List<Player> sortedPlayerList = new List<Player>();
-    List<PlayerInfo> playerDataList = new List<PlayerInfo>();
+    public List<string> playerNameList = new List<string>();
 
 
     private void Awake()
@@ -47,24 +49,19 @@ public class GameController : MonoBehaviourPunCallbacks
     public void CreateNewGame()
     {
         CreatePlayer();
-        sortedPlayerList = PhotonNetwork.CurrentRoom.Players.Values.OrderBy(player => player.ActorNumber).ToList();
-
+        List<Player> sortedPlayerList = PhotonNetwork.CurrentRoom.Players.Values.OrderBy(player => player.ActorNumber).ToList();
+        
         int i = 2;
         foreach (Player player in sortedPlayerList)
         {
-            if (player.NickName == PhotonNetwork.LocalPlayer.NickName)
+            if(player.NickName == PhotonNetwork.LocalPlayer.NickName)
             {
-                player1 = new PlayerInfo(i, 10, player.NickName);// ElmentID = 0, tokenNum = 10;
-
-                HashTable table = new HashTable();
-                table.Add("PlayerName", player1.playerName);
-                //table.Add("PlayerTokens", player1.tokens);
-                PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+                player1 = new PlayerInfo(i, 10);// ElmentID = 0, tokenNum = 10;
             }
             i++;
         }
-
-        UiController.Instance.InitUI(sortedPlayerList);
+        
+        
     }
 
     /// <summary>
@@ -74,7 +71,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         map = new Map(16, 0.25f); // Small Map
         MapGenerator.Instance.MapGenerate(map);
-        // gameCoroutine = StartCoroutine(GameCycle());
+       // gameCoroutine = StartCoroutine(GameCycle());
 
     }
 
@@ -92,19 +89,53 @@ public class GameController : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0, 50, 0), Quaternion.identity, 0);
         }
-
     }
 
-
-    List<string> playerNames = new List<string>();
-    List<Dictionary<Element, int>> playerTokens = new List<Dictionary<Element, int>>();
-
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
+    public void AddNameList(string name)
     {
-        string _name = (string)changedProps["PlayerName"];
-        //Dictionary<Element, int> _tokenDict = (Dictionary<Element, int>)changedProps["PlayerToken"];
-
+        playerNameList.Add(name);
     }
+
+
+
+
+    // #region GameCycle Region
+    // public bool playerFinish { get; set; }
+    // Coroutine gameCoroutine = null;
+    // private IEnumerator GameCycle()
+    // {
+    //     int x = 3;
+    //     playerFinish = false;
+    //     while (x > 0)
+    //     {
+    //         for (int i = 0; i < playerNameList.Count; i++) // i is player in active
+    //         {
+    //             HashTable table = new HashTable();
+    //             table.Add("whoseTurn", playerNameList[i]);
+    //             Debug.Log($"Now Player Name is:{playerNameList[i]}");
+    //             if (PhotonNetwork.LocalPlayer.NickName == playerNameList[i])
+    //             {
+    //                 UiController.Instance.DiceButtonInteractable(true);
+    //             }
+    //             else { UiController.Instance.DiceButtonInteractable(false); }
+
+    //             if (!playerFinish)
+    //             {
+    //                 Debug.Log("Player didn't finished");
+    //                 yield return new WaitUntil(() => playerFinish);
+    //                 Debug.Log("Player finished");
+    //             }
+    //             playerFinish = false;
+    //         }
+    //         x--;
+    //     }
+    //     Debug.Log("End Game");
+    //     SiginalUI.Instance.SiginalText("End Game");
+    // }
+    //#endregion
+
+
 
 }
 
+// �y�{���� -> �D��O�_�ϥ� -> ��l�O�_�ϥ� -> 
