@@ -55,11 +55,6 @@ public class GameController : MonoBehaviourPunCallbacks
             if (player.NickName == PhotonNetwork.LocalPlayer.NickName)
             {
                 player1 = new PlayerInfo(i, 10, player.NickName);// ElmentID = 0, tokenNum = 10;
-
-                HashTable table = new HashTable();
-                table.Add("PlayerName", player1.playerName);
-                //table.Add("PlayerTokens", player1.tokens);
-                PhotonNetwork.LocalPlayer.SetCustomProperties(table);
             }
             i++;
         }
@@ -95,16 +90,6 @@ public class GameController : MonoBehaviourPunCallbacks
 
     }
 
-
-    List<string> playerNames = new List<string>();
-    List<Dictionary<Element, int>> playerTokens = new List<Dictionary<Element, int>>();
-
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
-    {
-        string _name = (string)changedProps["PlayerName"];
-        //Dictionary<Element, int> _tokenDict = (Dictionary<Element, int>)changedProps["PlayerToken"];
-
-    }
 
 }
 
