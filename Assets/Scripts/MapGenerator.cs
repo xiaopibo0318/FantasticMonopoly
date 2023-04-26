@@ -35,7 +35,7 @@ public class MapGenerator : MonoBehaviourPunCallbacks
     {
         if (map == null)
         {
-            Debug.Log($"Map Generate Fail, cause map is null");
+            Debug.LogError($"Map Generate Fail, cause map is null");
             return;
         }
 
