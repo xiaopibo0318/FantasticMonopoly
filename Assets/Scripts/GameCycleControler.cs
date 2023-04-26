@@ -13,9 +13,6 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
 {
     public static GameCycleControler Instance;
 
-    // Coroutine for the game cycle
-    // Property to check if player has finished their turn
-    // List of player names
     Coroutine gameCoroutine = null;
     public bool playerFinish { get; set; }
     List<string> playerNameList = new List<string>();
@@ -77,8 +74,9 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
         if(!(changedProps.ContainsKey("playerElement") && changedProps.ContainsKey("playerFinish") && changedProps.ContainsKey("playerPos")))
             return;
 
-        // Set playerFinish to value of "playerFinish" key in changedProps and set "playerFinish" key to false in changedProps
-        playerFinish = (bool)changedProps["playerFinish"];
-        changedProps["playerFinish"] = false;
+        if(targetPlayer.NickName != PhotonNetwork.LocalPlayer.NickName){
+            playerFinish = (bool)changedProps["playerFinish"];
+            changedProps["playerFinish"] = false;
+        }
     }
 }
