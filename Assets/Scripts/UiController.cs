@@ -35,5 +35,20 @@ public class UiController : Singleton<UiController>
 
 
 
+<<<<<<< Updated upstream
+=======
+    /// <summary>
+    /// From GameController to catch the playerDataList, and get the player, and set the value to UI.
+    /// </summary>
+    /// <param name="playerList"></param>
+    public void InitUI()
+    {
+
+        var playerInfo = Instantiate(playerInfoPrefab, playerInfoParent);
+        var playerView = playerInfo.GetComponent<PlayerViewData>();
+        playerView.InfoInit(player.NickName);
+
+    }
+>>>>>>> Stashed changes
 
 }
