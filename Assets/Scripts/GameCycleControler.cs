@@ -11,84 +11,72 @@ using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class GameCycleControler : MonoBehaviourPunCallbacks
 {
-
     public static GameCycleControler Instance;
+
     Coroutine gameCoroutine = null;
     public bool playerFinish { get; set; }
-    public List<string> playerNameList = new List<string>();
+    List<string> playerNameList = new List<string>();
 
-
+    // Awake method to set the singleton instance
     private void Awake()
     {
-        if (Instance == null) { Instance = this; }
-        else Destroy(this);
+        Instance = this;
     }
     
-    // Start is called before the first frame update
+    // Start method called before the first frame update
     void Start()
     {
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            playerNameList.Add(player.NickName);
-        }
+        // Get list of player names from PhotonNetwork
+        playerNameList = PhotonNetwork.PlayerList.Select(player => player.NickName).ToList();
+        // Start the game cycle coroutine
         gameCoroutine = StartCoroutine(GameCycle());
     }
 
-    
-    // public void AddNameList(string name)
-    // {
-    //     playerNameList.Add(name);
-    // }
-
-
     private IEnumerator GameCycle()
     {
-        int x = 3;
-        Debug.Log("totalRound = " + GameController.Instance.totalRound);
+        // Get the number of rounds left from GameController
+        int RoundLeft = GameController.Instance.totalRound;
+        // Set playerFinish to false initially
         playerFinish = false;
-        for (int i = 0; i < playerNameList.Count; i++) 
-        {
-            Debug.Log(playerNameList[i]); 
-        }
-        while (x > 0)
-        {
-            for (int i = 0; i < playerNameList.Count; i++) // i is player in active
-            {
-                Debug.Log($"Now Player Name is:{playerNameList[i]}");
-                if (PhotonNetwork.LocalPlayer.NickName == playerNameList[i])
-                {
-                    UiController.Instance.DiceButtonInteractable(true);
-                }
-                else { UiController.Instance.DiceButtonInteractable(false); }
 
+        // Loop while there are rounds left
+        while (RoundLeft > 0)
+        {
+            // Loop through each player name in playerNameList
+            foreach (string playerName in playerNameList)
+            {
+                // If the local player's name matches the current player name, make the dice button interactable
+                // Player can roll dice here
+                if (PhotonNetwork.LocalPlayer.NickName == playerName)
+                    UiController.Instance.DiceButtonInteractable(true);
+                else 
+                    UiController.Instance.DiceButtonInteractable(false);
+                // Wait until playerFinish is true before continuing
                 if (!playerFinish)
-                {
-                    Debug.Log("Player" + playerNameList[i] + " didn't finished");
                     yield return new WaitUntil(() => playerFinish);
-                    Debug.Log("Player" + playerNameList[i] + "finished");
-                }
+
+                // Set playerFinish to false for next iteration
                 playerFinish = false;
             }
-            x--;
-        }
-        Debug.Log("End Game");
-        SiginalUI.Instance.SiginalText("End Game");
-    }
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
-    {
-        Debug.Log("In player finish detect");
-        foreach (DictionaryEntry entry in changedProps)
-        {
-            Debug.Log( "targetPlayer : " + targetPlayer.NickName + " key :  " + entry.Key + " value :  "+ entry.Value);
+            RoundLeft--;
         }
 
-        if(!(changedProps.ContainsKey("playerFinish")))
+        // Log end of game and make dice button non-interactable
+        Debug.Log("End Game");
+        UiController.Instance.DiceButtonInteractable(false);
+    }
+
+    // Override OnPlayerPropertiesUpdate method from MonoBehaviourPunCallbacks
+    // 
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
+    {
+        // Detect Validity
+        if(!(changedProps.ContainsKey("playerElement") && changedProps.ContainsKey("playerFinish") && changedProps.ContainsKey("playerPos")))
             return;
+
         if(targetPlayer.NickName != PhotonNetwork.LocalPlayer.NickName){
             playerFinish = (bool)changedProps["playerFinish"];
             changedProps["playerFinish"] = false;
         }
-        
     }
-
 }
