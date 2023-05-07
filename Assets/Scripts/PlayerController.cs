@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public static PlayerController LocalPlayerInstance; //Local Instance
 
+    public Animator playerAni;
+
     public enum PlayerGameState
     {
         Menu, Item, Dice, Move, End
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void LoadGame()
     {
         player.transform.position = new Vector3(0, 50, 0);
+        playerAni.SetTrigger("Idle");
         nowPosIndex = 0;
     }
 
