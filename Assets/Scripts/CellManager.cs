@@ -7,7 +7,7 @@ namespace CellManager{
         public int token;
 
         public bool IsTokenEmpty(){
-            if (token == 1) return false;
+            if (token > 0) return false;
             element = null;
             token = 0;
             return true;

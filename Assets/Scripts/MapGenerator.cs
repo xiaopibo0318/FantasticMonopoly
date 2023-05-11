@@ -86,12 +86,13 @@ public class MapGenerator : MonoBehaviourPunCallbacks
         {
             Map map = GameController.Instance.map;
             var mapSize = new MapSize();
-            if (map.cells[targetIndex].isSpecial == false)
-            {
+            
+            if (map.cells[targetIndex].isSpecial == false && map.cells[targetIndex].IsTokenEmpty()){
                 int nowElementID = (int)changedProps["playerElement"];
                 Vector3 pos = (mapSize.mapDictS[targetIndex] * offset) + groundList[nowElementID].transform.position;
                 var myObject = PhotonNetwork.Instantiate(groundList[nowElementID].name, pos, Quaternion.identity, 0);
                 myObject.transform.SetParent(groundParent);
+                
             }
         }
         
