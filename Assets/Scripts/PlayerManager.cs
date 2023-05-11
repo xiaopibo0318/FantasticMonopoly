@@ -21,11 +21,6 @@ namespace PlayerManager
             {new Element(4), 0}
         };
 
-        //public void Walk(Vector3 amount)
-        //{
-        //    position += amount;
-        //}
-
         public bool CheckIsFoul()
         {
             if (tokens[element] == 0) return false;

@@ -107,7 +107,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         GameController.Instance.InitGame();
         UiController.Instance.totalRound = roundNum[nowRoundIndex];
-        UiController.Instance.UpdateInfo();
+        UiController.Instance.UpdateInfo(roundNum[nowRoundIndex], roundNum[nowRoundIndex]);
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
     {

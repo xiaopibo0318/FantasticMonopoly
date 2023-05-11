@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using TMPro;
 using HashTable = ExitGames.Client.Photon.Hashtable;
@@ -32,25 +33,24 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
         gameCoroutine = StartCoroutine(GameCycle());
     }
 
-    private IEnumerator GameCycle()
-    {
+    private IEnumerator GameCycle(){
+        Debug.Log("Start Cycle");
         // Get the number of rounds left from GameController
-        int RoundLeft = GameController.Instance.totalRound;
+        int totalRound = GameController.Instance.totalRound;
+        int roundLeft = totalRound;
         // Set playerFinish to false initially
         playerFinish = false;
 
         // Loop while there are rounds left
-        while (RoundLeft > 0)
+        while (roundLeft > 0)
         {
+            UiController.Instance.UpdateInfo(roundLeft, totalRound);
             // Loop through each player name in playerNameList
             foreach (string playerName in playerNameList)
             {
                 // If the local player's name matches the current player name, make the dice button interactable
                 // Player can roll dice here
-                if (PhotonNetwork.LocalPlayer.NickName == playerName)
-                    UiController.Instance.DiceButtonInteractable(true);
-                else 
-                    UiController.Instance.DiceButtonInteractable(false);
+                UiController.Instance.DiceButtonInteractable(PhotonNetwork.LocalPlayer.NickName == playerName);
                 // Wait until playerFinish is true before continuing
                 if (!playerFinish)
                     yield return new WaitUntil(() => playerFinish);
@@ -58,10 +58,11 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
                 // Set playerFinish to false for next iteration
                 playerFinish = false;
             }
-            RoundLeft--;
+            roundLeft--;
         }
 
         // Log end of game and make dice button non-interactable
+        UiController.Instance.UpdateInfo(roundLeft, totalRound);
         Debug.Log("End Game");
         UiController.Instance.DiceButtonInteractable(false);
     }
