@@ -124,19 +124,12 @@ public class InventoryManager : Singleton<InventoryManager>
         RefreshItem();
     }
 
-    public bool IsBagFull()
-    {
-        return Instance.myBag.itemList.Count == 8;
-    }
-
+    
     public bool CheckBagFull()
     {
-        if (IsBagFull())
-        {
-            SiginalUI.Instance.SiginalText("背包已滿，請丟棄物品在撿取");
-            return true;
-        }
-        return false;
+        if (!Instance.myBag.itemList.Count == 8) return false;
+        SiginalUI.Instance.SiginalText("背包已滿，請丟棄物品在撿取");
+        return true;
     }
 
 }
