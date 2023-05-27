@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.UI;
 using Photon.Realtime;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
@@ -132,6 +133,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         print("roomLength: " + roomName.Length);
         return roomName.Trim();
     }
+    
     public string GetPlayerName()
     {
         string playerName = inputPlayerName.text;
@@ -146,43 +148,38 @@ public class RoomManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CreateRoom(roomName);
             PhotonNetwork.LocalPlayer.NickName = playerName;
-        }
-        else
+        } else
             print("Invalid RoomName or PlayerName!");
+    }
+
+    private bool IsValidName(string PlayerName)
+    {
+        Regex AllowedChars = new Regex(@"[A-Za-z0-9_-]+");
+        return AllowedChars.IsMatch(PlayerName);
     }
 
     public void _JoinRoom()
     {
         string roomName = GetRoomName();
         string playerName = GetPlayerName();
-        if (roomName.Length > 1 && playerName.Length > 1)
-        {
-            PhotonNetwork.JoinRoom(roomName);
-            PhotonNetwork.LocalPlayer.NickName = playerName;
-        }
-        else
-            print("Invalid RoomName or PlayerName!");
-
+        if (roomName.length < 1) return print("Invalid RoomName");
+        if ((playerName.length < 3 || playerName > 15) && !IsValidname(playerName)) return print("Invalid PlayerName");
+        PhotonNetwork.JoinRoom(roomName);
+        PhotonNetwork.LocalPlayer.NickName = playerName;
     }
 
     public override void OnJoinedRoom()
     {
-        if (PhotonNetwork.CurrentRoom != null)
-        {
-            SwitchRoomManager.Instance.SwitchView("Room");
-            if (PhotonNetwork.CurrentRoom == null)
-                SwitchRoomManager.Instance.SwitchView("Lobby");
-            else
-            {
-                textRoomName.text = PhotonNetwork.CurrentRoom.Name;
-                UpdatePlayerList();
-            }
-            buttonStartGame.interactable = PhotonNetwork.IsMasterClient;
+        if (PhotonNetwork.CurrentRoom == null) return Debug.LogWarning("No room selected!");
+        SwitchRoomManager.Instance.SwitchView("Room");
+        if (PhotonNetwork.CurrentRoom == null)
+        { 
+            Debug.LogWarning($"Unable to join room with name: {PhotonNetwork.CurrentRoom.Name}");
+            SwitchRoomManager.Instance.SwitchView("Lobby");
+            return;
         }
-        else
-        {
-            Debug.LogWarning("CurrentRoom is null.");
-        }
+        textRoomName.text = PhotonNetwork.CurrentRoom.Name;
+        UpdatePlayerList();
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {

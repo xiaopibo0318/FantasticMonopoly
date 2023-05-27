@@ -127,20 +127,6 @@ public class InventoryManager : Singleton<InventoryManager>
     public bool IsBagFull()
     {
         return Instance.myBag.itemList.Count == 8;
-        // var Count = 0;
-        // for (int i = 0; i < 8; i++)
-        // {
-        //     if (Instance.myBag.itemList[i] == null)
-        //     {
-        //         return false;
-        //     }
-        //     else
-        //     {
-        //         Count += 1;
-        //     }
-        // }
-        // if (Count == 8) return true;
-        // else return false;
     }
 
     public bool CheckBagFull()
