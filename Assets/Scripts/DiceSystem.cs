@@ -18,6 +18,11 @@ public class DiceSystem : Singleton<DiceSystem>
         //Roll();
     }
 
+    private void ResetDice()
+    {
+        //wtf where is the dice's init pos???
+    }
+
 
     public void RollDice()
     {

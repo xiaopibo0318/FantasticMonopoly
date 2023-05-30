@@ -28,7 +28,7 @@ public class InventoryManager : Singleton<InventoryManager>
     /// <summary>
     /// 背包添加物品
     /// </summary>
-    /// <param name="thisItem"></param>
+    /// <param name="thisItem"></param
     public void AddNewItem(Item thisItem)
     {
         if (!myBag.itemList.Contains(thisItem))
@@ -61,11 +61,16 @@ public class InventoryManager : Singleton<InventoryManager>
         RefreshItem();
         //cacheVisable.Instance.cacheSomething(thisItem);
     }
+    
 
     public void RefreshFromExternal() => RefreshItem();
 
     public static void RefreshItem()
     {
+        foreach (Item I in Instance.myBag.itemList)
+        {
+            Debug.LogWarning(I);
+        }
         for (int i = 0; i < Instance.slotGrid.transform.childCount; i++)
         {
             //如果下方沒子物件，就不執行
@@ -81,13 +86,9 @@ public class InventoryManager : Singleton<InventoryManager>
         {
             //小於1的數量刪掉
 
-            if (Instance.myBag.itemList[i] != null)
-            {
-                if (Instance.myBag.itemList[i].itemHave < 1)
-                {
-                    //Instance.myBag.itemList.RemoveAt(i);
-                    Instance.myBag.itemList[i] = null;
-                }
+            if (Instance.myBag.itemList[i] != null && Instance.myBag.itemList[i].itemHave < 1)
+            { 
+                Instance.myBag.itemList[i] = null;
             }
 
             //CreateNewItem(Instance.myBag.itemList[i]);
@@ -117,17 +118,12 @@ public class InventoryManager : Singleton<InventoryManager>
         if (!myBag.itemList.Contains(thisItem)) return;
         thisItem.itemHave -= num;
         RefreshItem();
-
-        if (!myBag.itemList.Contains(thisItem)) return;
-        thisItem.itemHave -= num;
-        
-        RefreshItem();
     }
 
     
     public bool CheckBagFull()
     {
-        if (!Instance.myBag.itemList.Count == 8) return false;
+        if (myBag.itemList.Count != 8) return false;
         SiginalUI.Instance.SiginalText("背包已滿，請丟棄物品在撿取");
         return true;
     }

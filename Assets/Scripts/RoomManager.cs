@@ -149,7 +149,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             PhotonNetwork.CreateRoom(roomName);
             PhotonNetwork.LocalPlayer.NickName = playerName;
         } else
-            print("Invalid RoomName or PlayerName!");
+            Debug.LogWarning("Invalid RoomName or PlayerName!");
     }
 
     private bool IsValidName(string PlayerName)
@@ -162,15 +162,28 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         string roomName = GetRoomName();
         string playerName = GetPlayerName();
-        if (roomName.length < 1) return print("Invalid RoomName");
-        if ((playerName.length < 3 || playerName > 15) && !IsValidname(playerName)) return print("Invalid PlayerName");
+        if (roomName.Length < 1)
+        {
+            Debug.LogWarning("Invalid RoomName");
+            return;
+        }
+
+        if ((playerName.Length < 3 || playerName.Length > 15) && !IsValidName(playerName))
+        {
+            Debug.LogWarning("Invalid PlayerName");
+            return;
+        }
         PhotonNetwork.JoinRoom(roomName);
         PhotonNetwork.LocalPlayer.NickName = playerName;
     }
 
     public override void OnJoinedRoom()
     {
-        if (PhotonNetwork.CurrentRoom == null) return Debug.LogWarning("No room selected!");
+        if (PhotonNetwork.CurrentRoom == null)
+        {
+            Debug.LogWarning("No room selected!");
+            return;
+        }
         SwitchRoomManager.Instance.SwitchView("Room");
         if (PhotonNetwork.CurrentRoom == null)
         { 
