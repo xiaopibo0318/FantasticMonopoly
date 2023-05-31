@@ -1,14 +1,10 @@
 using MapManager;
 using System.Collections;
-using System.Collections.Generic;
-using CellManager;
 using ElementManager;
-using ExitGames.Client.Photon;
+using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Photon.Pun;
 using TMPro;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerController : MonoBehaviourPunCallbacks
@@ -19,11 +15,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private int nowPosIndex;
     MapSize mapSize = new MapSize();
     PhotonView pv;
-    private static int id = 0;
-    private Element element{ get; set; }
-    private HashTable tokens{ get; set; }
+    static Element element = GameController.Instance.player1.element;
+    private static int id = element.id;
+    private HashTable tokens;
     public bool isFoul = false;
     public static PlayerController LocalPlayerInstance; //Local Instance
+    private Map map = GameController.Instance.map;
 
     public enum PlayerGameState
     {
@@ -71,10 +68,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Debug.Log($"AfterGoIndex is {nowPosIndex}");
         CameraController.Instance.ViewSwitch("backLook");
         GameController.Instance.UpdateCeil();
+        new ElementManager.ElementManager().Reaction(id, tokens, map.cells[nowPosIndex]);
+        string playerElement = $"element {id}";
+        if ((int)tokens[$"element {id}"] <= 0){
+            isFoul = true;
+            tokens.Remove($"element {id}");
+            tokens.Add($"element {id}", 0);
+        }
         GameCycleControler.Instance.playerFinish = true;
         HashTable table = new HashTable();
         table.Add("playerElement", GameController.Instance.player1.element.id);
         table.Add("playerPos", nowPosIndex);
+        table.Add("tokens", tokens);
+        table.Add("isFoul", isFoul);
         table.Add("playerFinish", GameCycleControler.Instance.playerFinish);
         PhotonNetwork.LocalPlayer.SetCustomProperties(table);
     }
@@ -89,7 +95,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private void InitPlayer(){
         UpdateName();
-        element = new Element(id);
         int amount = 10;//init amount of the selected element
         for (int i = 0; i <= 4; i++){
             if (i == id){
@@ -100,65 +105,4 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
-    public void CheckIsFoul(){
-        string playerElement = "element " + id;
-        int playerToken = (int)tokens[playerElement];
-        if (playerToken <= 0){
-            isFoul = true;
-        }
-    }
-
-    public void Reaction(Cell cell){
-        int idx = id;
-        int count = 0;
-        while (true){
-            if (cell.element.type == element.allowedType[idx]) break;
-            if (idx == 4){
-                idx = 0;
-                continue;
-            }
-            idx += 1;
-            count += 1;
-        }
-        int effect = count;
-        string playerElement = "element " + id;
-        string cellElement = "element " + cell.element.id;
-        int playerTmp = (int)tokens[playerElement];
-        int cellTmp = (int)tokens[cellElement];
-        switch (effect){
-            case 0: // e.g."Wood" - "Wood"
-                //ask insert tokens
-                break;
-            case 1: // e.g."Wood" - "Fire"
-                cell.token += 2;
-                tokens.Remove(playerElement);
-                tokens.Add(playerElement, playerTmp - 1);
-                tokens.Remove(cellElement);
-                tokens.Add(cellElement, cellTmp + 1);
-                CheckIsFoul();
-                break;
-            case 2: // e.g."Wood" - "Earth"
-                cell.token -= 1;
-                tokens.Remove(cellElement);
-                tokens.Add(cellElement, cellTmp - 1);
-                cell.IsTokenEmpty();
-                break;
-            case 3: // e.g."Wood" - "Metal"
-                tokens.Remove(playerElement);
-                tokens.Add(playerElement, playerTmp + 1);
-                cell.token -= 1;
-                tokens.Remove(cellElement);
-                tokens.Add(cellElement, cellTmp - 2);
-                cell.IsTokenEmpty();
-                break;
-            case 4: // e.g."Wood" - "Aqua"
-                tokens.Remove(playerElement);
-                tokens.Add(playerElement, playerTmp - 1);
-                tokens.Remove(cellElement);
-                tokens.Add(cellElement, cellTmp + 1);
-                CheckIsFoul();
-                break;
-        }
-    }
-    
 }
