@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public static PlayerController LocalPlayerInstance; //Local Instance
 
-    public Animator playerAni;
+    public Animator playerAnimator;
 
     public enum PlayerGameState
     {
@@ -43,11 +43,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         UpdateName();
     }
 
-
     public void LoadGame()
     {
-        player.transform.position = new Vector3(0, 50, 0);
-        playerAni.SetTrigger("Idle");
+        player.transform.position = new Vector3(-10, 0, 0);
         nowPosIndex = 0;
     }
 
@@ -59,12 +57,23 @@ public class PlayerController : MonoBehaviourPunCallbacks
         CameraController.Instance.ViewSwitch("overLook");
         Debug.Log($"NowIndex is {nowPosIndex}");
         var posOffset = new Vector3(0, 50, 0);
+        playerAnimator.SetTrigger("walk");
         for (int i = 0; i < amount; i++)
         {
+            int cPos = (nowPosIndex + 1 + i)% 16;
+            Debug.Log($"nowPos is {cPos}");
+            if(cPos == 3 || cPos == 7 || cPos == 9 || cPos == 11)
+            {
+                player.transform.rotation = Quaternion.Euler(0,90,0);
+            }
+            else if (cPos == 8)
+            {
+                player.transform.rotation = Quaternion.Euler(0,-90,0);
+            }
             yield return new WaitForSeconds(1);
-            Debug.Log($"nowPos is {(nowPosIndex + 1 + i) % 16}");
-            player.transform.position = (mapSize.mapDictS[(nowPosIndex + 1 + i) % 16] * 150) + posOffset;
+            //player.transform.position = (mapSize.mapDictS[(nowPosIndex + 1 + i) % 16] * 150) + posOffset;
         }
+        playerAnimator.SetTrigger("stop");
         nowPosIndex += amount;
         Debug.Log($"AfterGoIndex is {nowPosIndex}");
         CameraController.Instance.ViewSwitch("backLook");
@@ -75,6 +84,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         table.Add("playerPos", nowPosIndex);
         table.Add("playerFinish", GameCycleControler.Instance.playerFinish);
         PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+        
     }
 
     public int NowPos() { return nowPosIndex % 16; }

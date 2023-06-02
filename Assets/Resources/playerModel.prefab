@@ -134,7 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 6163860090468530316}
   playerName: {fileID: 8066748845820976103}
-  playerAni: {fileID: 0}
+  playerAnimator: {fileID: 0}
 --- !u!114 &6434245055276926435
 MonoBehaviour:
   m_ObjectHideFlags: 0
