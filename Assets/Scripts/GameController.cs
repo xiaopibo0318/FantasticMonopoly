@@ -28,8 +28,12 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if (Instance == null) { Instance = this; }
-        else Destroy(this);
+        if (Instance == null)
+        {
+            Instance = this;
+            return;
+        }
+        Destroy(this);
     }
 
 
