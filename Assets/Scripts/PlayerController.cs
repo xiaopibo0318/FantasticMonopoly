@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public void LoadGame()
     {
-        player.transform.position = new Vector3(-10, 0, 0);
+        player.transform.position = new Vector3(-10, -10, 0);
         nowPosIndex = 0;
     }
 
@@ -60,17 +60,21 @@ public class PlayerController : MonoBehaviourPunCallbacks
         playerAnimator.SetTrigger("walk");
         for (int i = 0; i < amount; i++)
         {
+            
+            yield return new WaitForSeconds(0.9f);
+            player.transform.Rotate(0,-3,0);
             int cPos = (nowPosIndex + 1 + i)% 16;
             Debug.Log($"nowPos is {cPos}");
             if(cPos == 3 || cPos == 7 || cPos == 9 || cPos == 11)
             {
-                player.transform.rotation = Quaternion.Euler(0,90,0);
+                yield return new WaitForSeconds(1);
+                player.transform.Rotate(0,90,0);
             }
             else if (cPos == 8)
             {
-                player.transform.rotation = Quaternion.Euler(0,-90,0);
+                player.transform.Rotate(0,-90,0);
             }
-            yield return new WaitForSeconds(1);
+            
             //player.transform.position = (mapSize.mapDictS[(nowPosIndex + 1 + i) % 16] * 150) + posOffset;
         }
         playerAnimator.SetTrigger("stop");

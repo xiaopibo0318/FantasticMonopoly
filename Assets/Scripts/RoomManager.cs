@@ -77,7 +77,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
             case "Round":
                 int roomSize = roundNum.Length;
                 nowRoundIndex = (nowRoundIndex + num + roomSize) % roomSize;
-                SiginalRoomText("Round");
+                textRound.text = roundNum[nowRoundIndex].ToString();
+                //SiginalRoomText("Round");
                 break;
         }
     }
