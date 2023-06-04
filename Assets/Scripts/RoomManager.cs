@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.UI;
 using Photon.Realtime;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
@@ -83,9 +84,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void SiginalRoomText(string name)
+    private void SiginalRoomText(string Name)
     {
-        switch (name)
+        switch (Name)
         {
             case "Round":
                 textRound.text = roundNum[nowRoundIndex].ToString();
@@ -108,7 +109,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         GameController.Instance.InitGame();
         UiController.Instance.totalRound = roundNum[nowRoundIndex];
-        UiController.Instance.UpdateInfo();
+        UiController.Instance.UpdateInfo(roundNum[nowRoundIndex], roundNum[nowRoundIndex]);
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
     {
@@ -133,12 +134,13 @@ public class RoomManager : MonoBehaviourPunCallbacks
         print("roomLength: " + roomName.Length);
         return roomName.Trim();
     }
+    
     public string GetPlayerName()
     {
         string playerName = inputPlayerName.text;
         return playerName.Trim();
     }
-
+    x
     public void CreateRoom()
     {
         string roomName = GetRoomName();
@@ -147,43 +149,51 @@ public class RoomManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CreateRoom(roomName);
             PhotonNetwork.LocalPlayer.NickName = playerName;
-        }
-        else
-            print("Invalid RoomName or PlayerName!");
+        } else
+            Debug.LogWarning("Invalid RoomName or PlayerName!");
+    }
+
+    private bool IsValidName(string PlayerName)
+    {
+        Regex AllowedChars = new Regex(@"[A-Za-z0-9_-]+");
+        return AllowedChars.IsMatch(PlayerName);
     }
 
     public void _JoinRoom()
     {
         string roomName = GetRoomName();
         string playerName = GetPlayerName();
-        if (roomName.Length > 1 && playerName.Length > 1)
+        if (roomName.Length < 1)
         {
-            PhotonNetwork.JoinRoom(roomName);
-            PhotonNetwork.LocalPlayer.NickName = playerName;
+            Debug.LogWarning("Invalid RoomName");
+            return;
         }
-        else
-            print("Invalid RoomName or PlayerName!");
 
+        if ((playerName.Length < 3 || playerName.Length > 15) && !IsValidName(playerName))
+        {
+            Debug.LogWarning("Invalid PlayerName");
+            return;
+        }
+        PhotonNetwork.JoinRoom(roomName);
+        PhotonNetwork.LocalPlayer.NickName = playerName;
     }
 
     public override void OnJoinedRoom()
     {
-        if (PhotonNetwork.CurrentRoom != null)
+        if (PhotonNetwork.CurrentRoom == null)
         {
-            SwitchRoomManager.Instance.SwitchView("Room");
-            if (PhotonNetwork.CurrentRoom == null)
-                SwitchRoomManager.Instance.SwitchView("Lobby");
-            else
-            {
-                textRoomName.text = PhotonNetwork.CurrentRoom.Name;
-                UpdatePlayerList();
-            }
-            buttonStartGame.interactable = PhotonNetwork.IsMasterClient;
+            Debug.LogWarning("No room selected!");
+            return;
         }
-        else
-        {
-            Debug.LogWarning("CurrentRoom is null.");
+        SwitchRoomManager.Instance.SwitchView("Room");
+        if (PhotonNetwork.CurrentRoom == null)
+        { 
+            Debug.LogWarning($"Unable to join room with name: {PhotonNetwork.CurrentRoom.Name}");
+            SwitchRoomManager.Instance.SwitchView("Lobby");
+            return;
         }
+        textRoomName.text = PhotonNetwork.CurrentRoom.Name;
+        UpdatePlayerList();
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -233,5 +243,4 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         SwitchRoomManager.Instance.SwitchView("Lobby");
     }
-
 }

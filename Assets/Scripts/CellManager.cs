@@ -7,7 +7,7 @@ namespace CellManager{
         public int token;
 
         public bool IsTokenEmpty(){
-            if (token == 1) return false;
+            if (token > 0) return false;
             element = null;
             token = 0;
             return true;
@@ -17,12 +17,6 @@ namespace CellManager{
             isSpecial = cellType;
             element = null;
             token = 0;
-        }
-
-        public Cell(bool cellType, int elementId, int tokenAmount){
-            isSpecial = cellType;
-            element = new Element(elementId);
-            token = tokenAmount;
         }
     }
 }

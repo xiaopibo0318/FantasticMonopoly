@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private GameObject target;
 
 
-    [Header("Camera®y¼Ð")]
+    [Header("Cameraåº§æ¨™")]
     private Vector3 offset = new Vector3(0, 180, -135);
     private Vector3 overLookP = new Vector3(400, 1000, 200);
     private Vector3 overLookR = new Vector3(90, 0, 0);

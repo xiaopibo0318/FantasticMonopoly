@@ -18,8 +18,9 @@ public class SwitchRoomManager : Singleton<SwitchRoomManager>
         {
             gameObjectsList[i].SetActive(false);
             if (gameObjectsList[i].name == name || gameObjectsList[i].name == "BackGround")
+            {
                 gameObjectsList[i].SetActive(true);
-            
+            }
         }
     }
 }

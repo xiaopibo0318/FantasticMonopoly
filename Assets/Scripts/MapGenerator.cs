@@ -1,11 +1,6 @@
-using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MapManager;
-using System;
-using System.Reflection;
-using PlayerManager;
 using Photon.Pun;
 using Photon.Realtime;
 using HashTable = ExitGames.Client.Photon.Hashtable;
@@ -76,9 +71,8 @@ public class MapGenerator : MonoBehaviourPunCallbacks
     {
         Debug.Log("detect map Update => targetPlayer : " + targetPlayer.NickName);
         foreach (DictionaryEntry entry in changedProps)
-            Debug.Log(" key : " + entry.Key + " value :  "+ entry.Value);
-        if(!(changedProps.ContainsKey("playerElement") && changedProps.ContainsKey("playerFinish") && changedProps.ContainsKey("playerPos")))
-            return;
+            Debug.Log($"Key: {entry.Key} | Value: {entry.Value}");
+        if(!(changedProps.ContainsKey("playerElement") && changedProps.ContainsKey("playerFinish") && changedProps.ContainsKey("playerPos")))  return;
 
         int targetIndex = (int)changedProps["playerPos"];
 
@@ -86,12 +80,13 @@ public class MapGenerator : MonoBehaviourPunCallbacks
         {
             Map map = GameController.Instance.map;
             var mapSize = new MapSize();
-            if (map.cells[targetIndex].isSpecial == false)
-            {
+            
+            if (map.cells[targetIndex].isSpecial == false && map.cells[targetIndex].IsTokenEmpty()){
                 int nowElementID = (int)changedProps["playerElement"];
                 Vector3 pos = (mapSize.mapDictS[targetIndex] * offset) + groundList[nowElementID].transform.position;
                 var myObject = PhotonNetwork.Instantiate(groundList[nowElementID].name, pos, Quaternion.identity, 0);
                 myObject.transform.SetParent(groundParent);
+                
             }
         }
         

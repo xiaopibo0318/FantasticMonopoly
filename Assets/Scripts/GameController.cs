@@ -28,8 +28,12 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if (Instance == null) { Instance = this; }
-        else Destroy(this);
+        if (Instance == null)
+        {
+            Instance = this;
+            return;
+        }
+        Destroy(this);
     }
 
 
@@ -60,8 +64,6 @@ public class GameController : MonoBehaviourPunCallbacks
             }
             i++;
         }
-        
-        
     }
 
     /// <summary>
@@ -71,7 +73,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         map = new Map(16, 0.25f); // Small Map
         MapGenerator.Instance.MapGenerate(map);
-       // gameCoroutine = StartCoroutine(GameCycle());
+        // gameCoroutine = StartCoroutine(GameCycle());
 
     }
 
@@ -84,11 +86,12 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void CreatePlayer()
     {
-        if (playerPrefab == null) { Debug.LogError("Can't Create Player, because playerPrefab is empty."); }
-        else
+        if (playerPrefab == null)
         {
-            PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0, 50, 0), Quaternion.identity, 0);
+            Debug.LogError("Can't Create Player, because playerPrefab is empty.");
+            return;
         }
+        PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0, 50, 0), Quaternion.identity, 0);
     }
 
     public void AddNameList(string name)
@@ -99,40 +102,40 @@ public class GameController : MonoBehaviourPunCallbacks
 
 
 
-    // #region GameCycle Region
-    // public bool playerFinish { get; set; }
-    // Coroutine gameCoroutine = null;
-    // private IEnumerator GameCycle()
-    // {
-    //     int x = 3;
-    //     playerFinish = false;
-    //     while (x > 0)
-    //     {
-    //         for (int i = 0; i < playerNameList.Count; i++) // i is player in active
-    //         {
-    //             HashTable table = new HashTable();
-    //             table.Add("whoseTurn", playerNameList[i]);
-    //             Debug.Log($"Now Player Name is:{playerNameList[i]}");
-    //             if (PhotonNetwork.LocalPlayer.NickName == playerNameList[i])
-    //             {
-    //                 UiController.Instance.DiceButtonInteractable(true);
-    //             }
-    //             else { UiController.Instance.DiceButtonInteractable(false); }
-
-    //             if (!playerFinish)
-    //             {
-    //                 Debug.Log("Player didn't finished");
-    //                 yield return new WaitUntil(() => playerFinish);
-    //                 Debug.Log("Player finished");
-    //             }
-    //             playerFinish = false;
-    //         }
-    //         x--;
-    //     }
-    //     Debug.Log("End Game");
-    //     SiginalUI.Instance.SiginalText("End Game");
-    // }
-    //#endregion
+    //  #region GameCycle Region
+    //  public bool playerFinish { get; set; }
+    //  Coroutine gameCoroutine = null;
+    //  private IEnumerator GameCycle()
+    //  {
+    //      int x = 3;
+    //      playerFinish = false;
+    //      while (x > 0)
+    //      {
+    //          for (int i = 0; i < playerNameList.Count; i++) // i is player in active
+    //          {
+    //              HashTable table = new HashTable();
+    //              table.Add("whoseTurn", playerNameList[i]);
+    //              Debug.Log($"Now Player Name is:{playerNameList[i]}");
+    //              if (PhotonNetwork.LocalPlayer.NickName == playerNameList[i])
+    //              {
+    //                  UiController.Instance.DiceButtonInteractable(true);
+    //              }
+    //              else { UiController.Instance.DiceButtonInteractable(false); }
+    //
+    //              if (!playerFinish)
+    //              {
+    //                  Debug.Log("Player didn't finished");
+    //                  yield return new WaitUntil(() => playerFinish);
+    //                  Debug.Log("Player finished");
+    //              }
+    //              playerFinish = false;
+    //          }
+    //          x--;
+    //      }
+    //      Debug.Log("End Game");
+    //      SiginalUI.Instance.SiginalText("End Game");
+    //  }
+    // #endregion
 
 
 

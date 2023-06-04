@@ -10,7 +10,7 @@ public class Item : ScriptableObject
     public string itemName;
     public Sprite itemImage;
     public string itemTag;
-    public int itemHave;
+    public int ItemCount;
 
     [TextArea]
     public string itemInfo;

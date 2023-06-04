@@ -20,9 +20,9 @@ public class UiController : Singleton<UiController>
     }
 
 
-    public void UpdateInfo(int x = 0)
+    public void UpdateInfo(int roundLeft, int total)
     {
-        roundText.text = "¶^¶Xº∆°G" + x + " / " + totalRound.ToString();
+        roundText.text = "ÂõûÂêàÊï∏Ôºö" + roundLeft + " / " + total;
     }
 
 
@@ -35,6 +35,7 @@ public class UiController : Singleton<UiController>
         {
             CameraController.Instance.ViewSwitch("Dice");
             DiceSystem.Instance.RollDice();
+            diceButton.interactable = false;
         });
         diceButton.interactable = false;
     }
