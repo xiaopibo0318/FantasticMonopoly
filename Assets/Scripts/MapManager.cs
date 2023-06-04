@@ -50,7 +50,7 @@ namespace MapManager
         public readonly Vector3[] mapDictS = {
             new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, 2), new Vector3(0, 0, 3),
             new Vector3(1, 0, 3), new Vector3(2, 0, 3), new Vector3(3, 0, 3), new Vector3(4, 0, 3),
-            new Vector3(4, 0, 2), new Vector3(5, 0, 2), new Vector3(5, 0, 1), new Vector3(5, 0, 0),
+            new Vector3(5, 0, 3), new Vector3(5, 0, 2), new Vector3(5, 0, 1), new Vector3(5, 0, 0),
             new Vector3(4, 0, 0), new Vector3(3, 0, 0), new Vector3(2, 0, 0), new Vector3(1, 0, 0)
         };
     }

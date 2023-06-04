@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public void LoadGame()
     {
-        player.transform.position = new Vector3(-10, -10, 0);
+        player.transform.position = new Vector3(-10, 0, 0);
         nowPosIndex = 0;
     }
 
@@ -56,28 +56,25 @@ public class PlayerController : MonoBehaviourPunCallbacks
         SiginalUI.Instance.SiginalText(pv.Owner.NickName + amount.ToString());
         CameraController.Instance.ViewSwitch("overLook");
         Debug.Log($"NowIndex is {nowPosIndex}");
-        var posOffset = new Vector3(0, 50, 0);
-        playerAnimator.SetTrigger("walk");
+        var posOffset = new Vector3(0, 0, 0);
+        
         for (int i = 0; i < amount; i++)
         {
-            
-            yield return new WaitForSeconds(0.9f);
-            player.transform.Rotate(0,-3,0);
+            playerAnimator.SetBool("walk",true);
+            yield return new WaitForSeconds(1);
+            playerAnimator.SetBool("walk",false);
+            player.transform.Rotate(0,-5,0);
+            //player.transform.Translate(1,0,0);
             int cPos = (nowPosIndex + 1 + i)% 16;
-            Debug.Log($"nowPos is {cPos}");
-            if(cPos == 3 || cPos == 7 || cPos == 9 || cPos == 11)
+
+            if(cPos == 3 || cPos == 8 || cPos == 11 || cPos==0)
             {
-                yield return new WaitForSeconds(1);
+                player.transform.position = (mapSize.mapDictS[cPos] * 150) + posOffset;
                 player.transform.Rotate(0,90,0);
             }
-            else if (cPos == 8)
-            {
-                player.transform.Rotate(0,-90,0);
-            }
-            
             //player.transform.position = (mapSize.mapDictS[(nowPosIndex + 1 + i) % 16] * 150) + posOffset;
         }
-        playerAnimator.SetTrigger("stop");
+        
         nowPosIndex += amount;
         Debug.Log($"AfterGoIndex is {nowPosIndex}");
         CameraController.Instance.ViewSwitch("backLook");
