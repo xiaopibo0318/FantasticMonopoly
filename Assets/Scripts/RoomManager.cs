@@ -83,9 +83,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void SiginalRoomText(string name)
+    private void SiginalRoomText(string Name)
     {
-        switch (name)
+        switch (Name)
         {
             case "Round":
                 textRound.text = roundNum[nowRoundIndex].ToString();
@@ -139,7 +139,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         string playerName = inputPlayerName.text;
         return playerName.Trim();
     }
-
+    x
     public void CreateRoom()
     {
         string roomName = GetRoomName();
@@ -242,5 +242,4 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         SwitchRoomManager.Instance.SwitchView("Lobby");
     }
-
 }

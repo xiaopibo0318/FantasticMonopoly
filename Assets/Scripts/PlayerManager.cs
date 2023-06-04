@@ -11,7 +11,7 @@ namespace PlayerManager
         public Element element;
         public bool isFoul = false;
         public Vector3 position = Vector3.zero;
-        public Inventory inventory = new Inventory();
+        public Backpack Invnetory = ScriptableObject.CreateInstance<Backpack>();
         public Dictionary<Element, int> tokens = new Dictionary<Element, int>(){
             {new Element(0), 0},
             {new Element(1), 0},

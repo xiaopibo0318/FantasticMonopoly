@@ -71,9 +71,8 @@ public class MapGenerator : MonoBehaviourPunCallbacks
     {
         Debug.Log("detect map Update => targetPlayer : " + targetPlayer.NickName);
         foreach (DictionaryEntry entry in changedProps)
-            Debug.Log(" key : " + entry.Key + " value :  "+ entry.Value);
-        if(!(changedProps.ContainsKey("playerElement") && changedProps.ContainsKey("playerFinish") && changedProps.ContainsKey("playerPos")))
-            return;
+            Debug.Log($"Key: {entry.Key} | Value: {entry.Value}");
+        if(!(changedProps.ContainsKey("playerElement") && changedProps.ContainsKey("playerFinish") && changedProps.ContainsKey("playerPos")))  return;
 
         int targetIndex = (int)changedProps["playerPos"];
 

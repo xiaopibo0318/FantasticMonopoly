@@ -18,11 +18,5 @@ namespace CellManager{
             element = null;
             token = 0;
         }
-
-        public Cell(bool cellType, int elementId, int tokenAmount){
-            isSpecial = cellType;
-            element = new Element(elementId);
-            token = tokenAmount;
-        }
     }
 }

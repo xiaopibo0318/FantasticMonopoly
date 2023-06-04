@@ -60,8 +60,6 @@ public class GameController : MonoBehaviourPunCallbacks
             }
             i++;
         }
-        
-        
     }
 
     /// <summary>
@@ -84,11 +82,12 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void CreatePlayer()
     {
-        if (playerPrefab == null) { Debug.LogError("Can't Create Player, because playerPrefab is empty."); }
-        else
+        if (playerPrefab == null)
         {
-            PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0, 50, 0), Quaternion.identity, 0);
+            Debug.LogError("Can't Create Player, because playerPrefab is empty.");
+            return;
         }
+        PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0, 50, 0), Quaternion.identity, 0);
     }
 
     public void AddNameList(string name)

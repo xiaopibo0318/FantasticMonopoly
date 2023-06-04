@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
@@ -30,7 +28,7 @@ public class Slot : MonoBehaviour
         }
 
         slotImage.sprite = item.itemImage;
-        slotNum.text = item.itemHave.ToString();
+        slotNum.text = item.ItemCount.ToString();
     }
 
 }
