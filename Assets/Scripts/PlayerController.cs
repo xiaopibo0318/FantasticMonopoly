@@ -63,16 +63,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
             playerAnimator.SetBool("walk",true);
             yield return new WaitForSeconds(1);
             playerAnimator.SetBool("walk",false);
-            player.transform.Rotate(0,-5,0);
+            
+            player.transform.Rotate(0,-4.2f,0);
             //player.transform.Translate(1,0,0);
             int cPos = (nowPosIndex + 1 + i)% 16;
 
             if(cPos == 3 || cPos == 8 || cPos == 11 || cPos==0)
             {
-                player.transform.position = (mapSize.mapDictS[cPos] * 150) + posOffset;
+                player.transform.position = (mapSize.mapDictS[(nowPosIndex + 1 + i) % 16] * 150) + posOffset;
                 player.transform.Rotate(0,90,0);
             }
-            //player.transform.position = (mapSize.mapDictS[(nowPosIndex + 1 + i) % 16] * 150) + posOffset;
+            
         }
         
         nowPosIndex += amount;
