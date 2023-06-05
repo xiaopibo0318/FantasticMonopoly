@@ -825,8 +825,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c8dba75a0735e4abbeccd15b4afa3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  siginalContent: {fileID: 1628559891}
-  siginalText: {fileID: 423027153}
+  signalContent: {fileID: 1628559891}
+  signalText: {fileID: 423027153}
   confirm: {fileID: 0}
   dontDo: {fileID: 0}
   skipButton: {fileID: 492057733}
@@ -933,6 +933,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1659243265 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 11086f382077c1a46bbcca01cac47771, type: 3}

@@ -665,6 +665,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &-8933260623042237768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,6 +680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4003678116964979415}
   playerName: {fileID: 8384992903889783802}
+  isFoul: 0
   playerAnimator: {fileID: 7648256144355250711}
 --- !u!114 &5078865979477791767
 MonoBehaviour:

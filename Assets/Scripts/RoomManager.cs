@@ -140,7 +140,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         string playerName = inputPlayerName.text;
         return playerName.Trim();
     }
-    x
     public void CreateRoom()
     {
         string roomName = GetRoomName();
