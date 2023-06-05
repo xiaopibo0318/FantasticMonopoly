@@ -202,3 +202,4 @@ Received Import Request.
   path: Assets/Scripts/RoomManager.cs
   artifactKey: Guid(696fcf34df66a0343980c7b72053b614) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/Scripts/RoomManager.cs using Guid(696fcf34df66a0343980c7b72053b614) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5303d49e154afde982a4e8e08ca16d7') in 0.001363 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
