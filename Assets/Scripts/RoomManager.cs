@@ -68,6 +68,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
         SwitchRoomManager.Instance.SwitchView("Lobby");
+        LoadingManager.Instance.LobbyLoading();
     }
 
 
@@ -103,6 +104,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         SceneHandler.Instance.GoToNextScene("MainGame");
         TimeManager.Instance.Delay(1, () => LoadMainGame());
 
+
     }
 
     private void LoadMainGame()
@@ -113,7 +115,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
     {
-        if(GameController.Instance.totalRound == (int)changedProps["totalRound"])
+        if (GameController.Instance.totalRound == (int)changedProps["totalRound"])
             return;
         GameController.Instance.totalRound = (int)changedProps["totalRound"];
     }
@@ -134,7 +136,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         print("roomLength: " + roomName.Length);
         return roomName.Trim();
     }
-    
+
     public string GetPlayerName()
     {
         string playerName = inputPlayerName.text;
@@ -148,7 +150,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CreateRoom(roomName);
             PhotonNetwork.LocalPlayer.NickName = playerName;
-        } else
+        }
+        else
             Debug.LogWarning("Invalid RoomName or PlayerName!");
     }
 
@@ -186,7 +189,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
         SwitchRoomManager.Instance.SwitchView("Room");
         if (PhotonNetwork.CurrentRoom == null)
-        { 
+        {
             Debug.LogWarning($"Unable to join room with name: {PhotonNetwork.CurrentRoom.Name}");
             SwitchRoomManager.Instance.SwitchView("Lobby");
             return;

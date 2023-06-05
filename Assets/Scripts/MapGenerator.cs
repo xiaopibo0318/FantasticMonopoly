@@ -50,22 +50,22 @@ public class MapGenerator : MonoBehaviourPunCallbacks
                 myObject.transform.SetParent(groundParent);
             }
         }
+        PlayerController.LocalPlayerInstance.UpdateMapDataToPlayer(map);
         Debug.Log($"Build Succeed");
     }
 
 
-    // public void UpdateCeil(Map map, int targetIndex, PlayerInfo player)
-    // {
-    //     Debug.Log($"is special? :{map.cells[targetIndex].isSpecial}, index is{targetIndex}, playElementId is{player.element.id}");
-    //     var mapSize = new MapSize();
-    //     if (map.cells[targetIndex].isSpecial == false)
-    //     {
-    //         int nowElementID = player.element.id;
-    //         Vector3 pos = (mapSize.mapDictS[targetIndex] * offset) + groundList[nowElementID].transform.position;
-    //         var myObject = PhotonNetwork.Instantiate(groundList[nowElementID].name, pos, Quaternion.identity, 0);
-    //         myObject.transform.SetParent(groundParent);
-    //     }
-    // }
+    public void UpdateCeil(Map map, int targetIndex, int elementIdInt)
+    {
+        Debug.Log($"is special? :{map.cells[targetIndex].isSpecial}, index is{targetIndex}, playElementId is{elementIdInt}");
+        var mapSize = new MapSize();
+        if (map.cells[targetIndex].isSpecial == false)
+        {
+            Vector3 pos = (mapSize.mapDictS[targetIndex] * offset) + groundList[elementIdInt].transform.position;
+            var myObject = PhotonNetwork.Instantiate(groundList[elementIdInt].name, pos, Quaternion.identity, 0);
+            myObject.transform.SetParent(groundParent);
+        }
+    }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
     {

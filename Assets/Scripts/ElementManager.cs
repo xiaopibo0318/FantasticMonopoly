@@ -1,30 +1,38 @@
 using CellManager;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 
-namespace ElementManager{
-    public class Element{
+namespace ElementManager
+{
+    public class Element
+    {
         public string type;
         public string color;
         public int id;
-        
-        public readonly string[] allowedType = new string[] { "Wood", "Fire", "Earth", "Metal", "Aqua" };
-        public readonly string[] allowedColor = new string[] {"Green", "Red", "Brown", "Yellow", "Blue"};
 
-        public Element(int elementId){
+        public readonly string[] allowedType = new string[] { "Wood", "Fire", "Earth", "Metal", "Aqua" };
+        public readonly string[] allowedColor = new string[] { "Green", "Red", "Brown", "Yellow", "Blue" };
+
+        public Element(int elementId)
+        {
             this.id = elementId;
-            this.type =  allowedType[id];
+            this.type = allowedType[id];
             this.color = allowedColor[id];
         }
     }
 
-    public class ElementManager{
-        public HashTable Reaction(int playerElementId, HashTable playerTokens, Cell cell){
+    public class ElementManager
+    {
+        public HashTable Reaction(int playerElementId, HashTable playerTokens, Cell cell)
+        {
             HashTable tokens = playerTokens;
             int idx = playerElementId;
             int count = 0;
-            while (true){
+            while (true)
+            {
+                if (cell.element == null) break;
                 if (cell.element.id == idx) break;
-                if (idx == 4){
+                if (idx == 4)
+                {
                     idx = 0;
                     continue;
                 }
@@ -33,10 +41,19 @@ namespace ElementManager{
             }
             int effect = count;
             string playerElement = "element " + playerElementId;
-            string cellElement = "element " + cell.element.id;
+            string cellElement;
+            if (cell.element == null)
+            {
+                cellElement = playerElement;
+            }
+            else
+            {
+                cellElement = "element " + cell.element.id;
+            }
             int playerTmp = (int)playerTokens[playerElement];
             int cellTmp = (int)playerTokens[cellElement];
-            switch (effect){
+            switch (effect)
+            {
                 case 0: // e.g."Wood" - "Wood"
                     cell.token += 2;
                     break;

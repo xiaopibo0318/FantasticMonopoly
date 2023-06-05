@@ -16,6 +16,7 @@ public class TimeManager : Singleton<TimeManager>{
 
     private IEnumerator CountDown(float time, UnityAction action = null)
     {
+        LoadingManager.Instance.LobbyLoading();
         while (time > 0)
         {
             time-= Time.deltaTime;

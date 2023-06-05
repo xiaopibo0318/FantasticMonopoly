@@ -24,11 +24,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public Animator playerAnimator;
 
-    public enum PlayerGameState
-    {
-        Menu, Item, Dice, Move, End
-    }
-
 
     private void Awake()
     {
@@ -38,7 +33,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             LocalPlayerInstance = this;
         }
     }
-    
+
     private void Start()
     {
         InitPlayer();
@@ -58,32 +53,35 @@ public class PlayerController : MonoBehaviourPunCallbacks
         CameraController.Instance.ViewSwitch("overLook");
         Debug.Log($"NowIndex is {nowPosIndex}");
         var posOffset = new Vector3(-10, -20, 0);
-        
+
         for (int i = 0; i < amount; i++)
         {
-            playerAnimator.SetBool("walk",true);
+            playerAnimator.SetBool("walk", true);
             yield return new WaitForSeconds(1.05f);
-            playerAnimator.SetBool("walk",false);
-            
-            player.transform.Rotate(0,-4.2f,0);
-            //player.transform.Translate(1,0,0);
-            int cPos = (nowPosIndex + 1 + i)% 16;
+            playerAnimator.SetBool("walk", false);
 
-            if(cPos == 3 || cPos == 8 || cPos == 11 || cPos==0)
+            player.transform.Rotate(0, -4.2f, 0);
+            //player.transform.Translate(1,0,0);
+            int cPos = (nowPosIndex + 1 + i) % 16;
+
+            if (cPos == 3 || cPos == 8 || cPos == 11 || cPos == 0)
             {
                 player.transform.position = (mapSize.mapDictS[(nowPosIndex + 1 + i) % 16] * 150) + posOffset;
-                player.transform.Rotate(0,90,0);
+                player.transform.Rotate(0, 90, 0);
             }
-            
+
         }
-        
+
         nowPosIndex += amount;
         Debug.Log($"AfterGoIndex is {nowPosIndex}");
         CameraController.Instance.ViewSwitch("backLook");
         GameController.Instance.UpdateCeil();
+        Debug.Log($"Idx is {id}");
+        Debug.Log($"tokens is{tokens.Count}");
         new ElementManager.ElementManager().Reaction(id, tokens, map.cells[nowPosIndex]);
         string playerElement = $"element {id}";
-        if ((int)tokens[$"element {id}"] <= 0){
+        if ((int)tokens[$"element {id}"] <= 0)
+        {
             isFoul = true;
             tokens.Remove($"element {id}");
             tokens.Add($"element {id}", 0);
@@ -96,7 +94,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         table.Add("isFoul", isFoul);
         table.Add("playerFinish", GameCycleControler.Instance.playerFinish);
         PhotonNetwork.LocalPlayer.SetCustomProperties(table);
-        
+        MapGenerator.Instance.UpdateCeil(map, nowPosIndex, id);
+
     }
 
     public int NowPos() { return nowPosIndex % 16; }
@@ -107,19 +106,27 @@ public class PlayerController : MonoBehaviourPunCallbacks
         playerName.text = pv.Owner.NickName;
     }
 
-    private void InitPlayer(){
+    private void InitPlayer()
+    {
         UpdateName();
         element = GameController.Instance.player1.element;
         map = GameController.Instance.map;
         id = element.id;
         int amount = 10;//init amount of the selected element
-        for (int i = 0; i <= 4; i++){
-            if (i == id){
+        for (int i = 0; i <= 4; i++)
+        {
+            if (i == id)
+            {
                 tokens.Add($"element {i}", amount);
                 continue;
             }
             tokens.Add($"element {i}", 0);
         }
+    }
+
+    public void UpdateMapDataToPlayer(Map _map)
+    {
+        map = _map;
     }
 
 }
