@@ -11,6 +11,7 @@ ScriptsOnlyBuild:
     - MainGameManager
     - MapGenerator
     - PlayerController
+    - PlayerViewManager
     - RoomManager
     - SceneHandler
     - SignalUI
@@ -48,6 +49,8 @@ ScriptsOnlyBuild:
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshPro
     - TMPro.TextMeshProUGUI
+    Unity.Timeline.dll:
+    - UnityEngine.Timeline.TimelineAsset
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -303,11 +306,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 21116}
     - Class: 114
+      Script: {instanceID: 21296}
+    - Class: 114
       Script: {instanceID: 23508}
     - Class: 114
       Script: {instanceID: 24058}
     - Class: 114
-      Script: {instanceID: 27054}
+      Script: {instanceID: 25894}
+    - Class: 114
+      Script: {instanceID: 27166}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -470,6 +477,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 23670}
     - Class: 114
       Script: {instanceID: 24012}
+    - Class: 114
+      Script: {instanceID: 27166}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -805,7 +814,7 @@ ScriptsOnlyBuild:
     className: CurrentRoomPropertiesListedInLobbyProperty
   - hash:
       serializedVersion: 2
-      Hash: 3950558bf8f563dfa7104c08fdea4ad7
+      Hash: ff16860643166511ed2eea78956af24b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UiController
@@ -2573,6 +2582,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DiceSystem
+  - hash:
+      serializedVersion: 2
+      Hash: 91113b895c5e428baf561376c34ef3c6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerViewManager
   platform: 19
   scenePathNames:
   - Assets/Scenes/Persistent.unity

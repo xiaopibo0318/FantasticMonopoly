@@ -82,23 +82,6 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
 
-    //private void UpdatePublicDataToPlayer()
-    //{
-
-    //    int i = 2;
-    //    foreach (Player player in sortedPlayerList)
-    //    {
-    //        Debug.Log("Update Public Data");
-    //        if (map == null) { Debug.Log("Update Map Data Failed"); }
-    //        if (player.NickName == PhotonNetwork.LocalPlayer.NickName)
-    //        {
-    //            PlayerController.LocalPlayerInstance.UpdateMapDataToPlayer(map);
-    //        }
-    //        i++;
-    //    }
-    //}
-
-
     public void UpdateMapDataToGameController(Map _map)
     {
         map = _map;

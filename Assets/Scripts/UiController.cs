@@ -1,7 +1,15 @@
+using Photon.Pun;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Realtime;
+using MapManager;
+using PlayerManager;
+using System.Linq.Expressions;
+using UnityEngine.Events;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class UiController : Singleton<UiController>
 {
@@ -14,9 +22,14 @@ public class UiController : Singleton<UiController>
     [SerializeField] private Text roundText;
     public int totalRound { get; set; }
 
+    [SerializeField] private GameObject playerInfoUI;
+    [SerializeField] private Transform playerInfoParent;
+    private GameObject viewObject;
+
     private void Start()
     {
         InitButton();
+        StartCoroutine(CountDown(.5f, InitPlayerInfo));
     }
 
 
@@ -45,6 +58,44 @@ public class UiController : Singleton<UiController>
     public void DiceButtonInteractable(bool b)
     {
         diceButton.interactable = b;
+    }
+
+
+    public void InitPlayerInfo()
+    {
+        List<Player> sortedPlayerList = PhotonNetwork.CurrentRoom.Players.Values.OrderBy(player => player.ActorNumber).ToList();
+        foreach (Player player in sortedPlayerList)
+        {
+            var myObject = Instantiate(playerInfoUI, playerInfoParent);
+            //var myObject = PhotonNetwork.Instantiate(playerInfoUI.name, Vector3.zero, Quaternion.identity, 0);
+            myObject.GetComponent<PlayerViewManager>().playerName.text = player.NickName;
+
+            if (player.NickName == PhotonNetwork.LocalPlayer.NickName)
+            {
+                for (int i = 0; i < myObject.GetComponent<PlayerViewManager>().elementNum.Length; i++)
+                {
+                    myObject.GetComponent<PlayerViewManager>().elementNum[i].text = PlayerController.LocalPlayerInstance.GetPlayerElementData(i);
+                }
+            }
+            viewObject = myObject;
+        }
+    }
+
+
+
+    private IEnumerator CountDown(float time, UnityAction action = null)
+    {
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        action?.Invoke();
+    }
+
+    public void UpdatePlayerViewData(int i, int num)
+    {
+        viewObject.GetComponent<PlayerViewManager>().elementNum[i].text = num.ToString();
     }
 
 }

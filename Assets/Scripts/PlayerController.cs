@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         MapGenerator.Instance.UpdateCeil(map, nowPosIndex, id);
         //SerializeMapData(map,map.cells);
         ChangeMapData(map, map.cells);
+        UpdatePlayerElementData((int)tokens[$"element {id}"]);
     }
 
     public int NowPos() { return nowPosIndex % 16; }
@@ -200,12 +201,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
         SignalUI.Instance.SignalText(text);
     }
 
-
-    private void SerializeMapData(Map _map, Cell _cells)
+    public string GetPlayerElementData(int i)
     {
-        string jsonData = JsonUtility.ToJson(_map);
-        byte[] byteData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        Debug.Log($"tokenNumis:{tokens[$"element {i}"].ToString()}");
+        return (string)tokens[$"element {i}"].ToString();
     }
 
+    private void UpdatePlayerElementData(int num)
+    {
+        UiController.Instance.UpdatePlayerViewData(id, num);
+    }
 
 }

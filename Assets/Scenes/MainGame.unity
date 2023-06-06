@@ -951,6 +951,8 @@ MonoBehaviour:
   backLookButton: {fileID: 1369441954}
   diceButton: {fileID: 1513401535}
   roundText: {fileID: 1865405155}
+  playerInfoUI: {fileID: 8769589067941410010, guid: 2ef56223fe0d9b0459b185a58386a55a, type: 3}
+  playerInfoParent: {fileID: 723447407}
 --- !u!1 &723447406
 GameObject:
   m_ObjectHideFlags: 0

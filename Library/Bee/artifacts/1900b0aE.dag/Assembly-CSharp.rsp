@@ -407,6 +407,7 @@
 "Assets/Scripts/MapManager.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/PlayerManager.cs"
+"Assets/Scripts/PlayerViewManager.cs"
 "Assets/Scripts/PlugIn/Singleton.cs"
 "Assets/Scripts/RoomManager.cs"
 "Assets/Scripts/SceneHandler.cs"
