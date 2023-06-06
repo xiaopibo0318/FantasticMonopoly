@@ -65,6 +65,7 @@ public class MapGenerator : MonoBehaviourPunCallbacks
             var myObject = PhotonNetwork.Instantiate(groundList[elementIdInt].name, pos, Quaternion.identity, 0);
             myObject.transform.SetParent(groundParent);
         }
+        GameController.Instance.UpdateMapDataToGameController(map);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)

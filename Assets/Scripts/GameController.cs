@@ -11,6 +11,8 @@ using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using Photon.Realtime;
 using HashTable = ExitGames.Client.Photon.Hashtable;
+using CellManager;
+using UnityEngine.Rendering.VirtualTexturing;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
@@ -25,6 +27,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public List<string> playerNameList = new List<string>();
 
+    private List<Player> sortedPlayerList;
 
     private void Awake()
     {
@@ -53,14 +56,15 @@ public class GameController : MonoBehaviourPunCallbacks
     public void CreateNewGame()
     {
         CreatePlayer();
-        List<Player> sortedPlayerList = PhotonNetwork.CurrentRoom.Players.Values.OrderBy(player => player.ActorNumber).ToList();
-        
+        sortedPlayerList = PhotonNetwork.CurrentRoom.Players.Values.OrderBy(player => player.ActorNumber).ToList();
+
         int i = 2;
         foreach (Player player in sortedPlayerList)
         {
-            if(player.NickName == PhotonNetwork.LocalPlayer.NickName)
+            if (player.NickName == PhotonNetwork.LocalPlayer.NickName)
             {
                 player1 = new PlayerInfo(i, 10);// ElmentID = 0, tokenNum = 10;
+                PlayerController.LocalPlayerInstance.UpdateMapDataToPlayer(map);
             }
             i++;
         }
@@ -75,6 +79,30 @@ public class GameController : MonoBehaviourPunCallbacks
         MapGenerator.Instance.MapGenerate(map);
         // gameCoroutine = StartCoroutine(GameCycle());
 
+    }
+
+
+    private void UpdatePublicDataToPlayer()
+    {
+
+        int i = 2;
+        foreach (Player player in sortedPlayerList)
+        {
+            Debug.Log("Update Public Data");
+            if (map == null) { Debug.Log("Update Map Data Failed"); }
+            if (player.NickName == PhotonNetwork.LocalPlayer.NickName)
+            {
+                PlayerController.LocalPlayerInstance.UpdateMapDataToPlayer(map);
+            }
+            i++;
+        }
+    }
+
+
+    public void UpdateMapDataToGameController(Map _map)
+    {
+        map = _map;
+        UpdatePublicDataToPlayer();
     }
 
 
@@ -100,6 +128,26 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
 
+    [PunRPC]
+    public void UpdateMapData(byte[] mapDataBytes, byte[] cellsDataBytes)
+    {
+        string jsonData = System.Text.Encoding.UTF8.GetString(mapDataBytes);
+        map = JsonUtility.FromJson<Map>(jsonData);
+        string cellsData = System.Text.Encoding.UTF8.GetString(cellsDataBytes);
+        map.cells = JsonUtility.FromJson<Cell[]>(cellsData);
+    }
+
+
+    public void ChangeMapData(Map newMapData, Cell[] cellData)
+    {
+
+        string jsonData = JsonUtility.ToJson(newMapData);
+        byte[] byteData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+
+        string cellsData = JsonUtility.ToJson(cellData);
+        byte[] cellsByteData = System.Text.Encoding.UTF8.GetBytes(cellsData);
+        photonView.RPC("UpdateMapData", RpcTarget.Others, byteData, cellsByteData);
+    }
 
 
     //  #region GameCycle Region
@@ -140,5 +188,3 @@ public class GameController : MonoBehaviourPunCallbacks
 
 
 }
-
-// �y�{���� -> �D��O�_�ϥ� -> ��l�O�_�ϥ� -> 

@@ -4,6 +4,7 @@ using CellManager;
 using UnityEngine;
 namespace MapManager
 {
+    [Serializable]
     public class Map
     {
         public int size;
