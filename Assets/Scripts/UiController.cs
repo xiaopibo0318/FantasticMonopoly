@@ -22,7 +22,7 @@ public class UiController : Singleton<UiController>
 
     public void UpdateInfo(int roundLeft, int total)
     {
-        roundText.text = "回合數：" + roundLeft + " / " + total;
+        roundText.text = "回合數：" + (total - roundLeft) + " / " + total;
     }
 
 
@@ -36,6 +36,7 @@ public class UiController : Singleton<UiController>
             CameraController.Instance.ViewSwitch("Dice");
             DiceSystem.Instance.RollDice();
             diceButton.interactable = false;
+            PlayerController.LocalPlayerInstance.SignalTextToEveryPlayer("玩家擲骰子中");
         });
         diceButton.interactable = false;
     }

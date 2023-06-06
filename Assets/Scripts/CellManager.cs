@@ -1,6 +1,8 @@
 using ElementManager;
+using System;
 
 namespace CellManager{
+    [Serializable]
     public class Cell{
         public bool isSpecial = false;
         public Element element = null;

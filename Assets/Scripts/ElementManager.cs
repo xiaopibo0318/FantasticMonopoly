@@ -1,8 +1,10 @@
 using CellManager;
+using System;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 
 namespace ElementManager
 {
+    [Serializable]
     public class Element
     {
         public string type;

@@ -457,7 +457,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &424254191
 RectTransform:
   m_ObjectHideFlags: 0
@@ -691,9 +691,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f91060c932153844ba7c4b331ea97ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myBag: {fileID: 11400000, guid: 8624c9cf777c79145a3260369761d5f1, type: 2}
-  slotGrid: {fileID: 406512251}
-  emptySlot: {fileID: 8014263561874850906, guid: c508ebc6593180048aac2255787ad1ec, type: 3}
 --- !u!1 &582350262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,7 +1606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1369441953
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2348,7 +2345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1838787211
 RectTransform:
   m_ObjectHideFlags: 0

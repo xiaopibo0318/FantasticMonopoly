@@ -294,6 +294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb157e3659fea7499e9ce7b78819cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map:
+    size: 0
   playerPrefab: {fileID: 4003678116964979415, guid: 33976c6aab816284a9483c454347a32b, type: 3}
   playerNameList: []
 --- !u!1 &423027151

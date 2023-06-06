@@ -82,27 +82,26 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
 
-    private void UpdatePublicDataToPlayer()
-    {
+    //private void UpdatePublicDataToPlayer()
+    //{
 
-        int i = 2;
-        foreach (Player player in sortedPlayerList)
-        {
-            Debug.Log("Update Public Data");
-            if (map == null) { Debug.Log("Update Map Data Failed"); }
-            if (player.NickName == PhotonNetwork.LocalPlayer.NickName)
-            {
-                PlayerController.LocalPlayerInstance.UpdateMapDataToPlayer(map);
-            }
-            i++;
-        }
-    }
+    //    int i = 2;
+    //    foreach (Player player in sortedPlayerList)
+    //    {
+    //        Debug.Log("Update Public Data");
+    //        if (map == null) { Debug.Log("Update Map Data Failed"); }
+    //        if (player.NickName == PhotonNetwork.LocalPlayer.NickName)
+    //        {
+    //            PlayerController.LocalPlayerInstance.UpdateMapDataToPlayer(map);
+    //        }
+    //        i++;
+    //    }
+    //}
 
 
     public void UpdateMapDataToGameController(Map _map)
     {
         map = _map;
-        UpdatePublicDataToPlayer();
     }
 
 
@@ -128,26 +127,10 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
 
-    [PunRPC]
-    public void UpdateMapData(byte[] mapDataBytes, byte[] cellsDataBytes)
-    {
-        string jsonData = System.Text.Encoding.UTF8.GetString(mapDataBytes);
-        map = JsonUtility.FromJson<Map>(jsonData);
-        string cellsData = System.Text.Encoding.UTF8.GetString(cellsDataBytes);
-        map.cells = JsonUtility.FromJson<Cell[]>(cellsData);
-    }
+    
 
 
-    public void ChangeMapData(Map newMapData, Cell[] cellData)
-    {
 
-        string jsonData = JsonUtility.ToJson(newMapData);
-        byte[] byteData = System.Text.Encoding.UTF8.GetBytes(jsonData);
-
-        string cellsData = JsonUtility.ToJson(cellData);
-        byte[] cellsByteData = System.Text.Encoding.UTF8.GetBytes(cellsData);
-        photonView.RPC("UpdateMapData", RpcTarget.Others, byteData, cellsByteData);
-    }
 
 
     //  #region GameCycle Region

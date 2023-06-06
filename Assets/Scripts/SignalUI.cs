@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Photon.Pun;
 
-public class SignalUI : MonoBehaviour
+public class SignalUI : MonoBehaviourPunCallbacks
 {
     public GameObject signalContent;
     public Text signalText;
@@ -90,5 +91,9 @@ public class SignalUI : MonoBehaviour
         SignalUI.Instance.ResetSignal();
         skipButton.gameObject.SetActive(false);
     }
+
+
+    
+
 
 }

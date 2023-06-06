@@ -11,7 +11,7 @@ public class LoadingManager : Singleton<LoadingManager>
     [SerializeField] private GameObject loadingImage;
     [SerializeField] private CanvasGroup fadeCanvasGroup;
     private float fadeDuration = 3;
-    private bool isFade;
+    //private bool isFade = true;
     [SerializeField] private RectTransform idle;
 
     private Vector2 startPos = new Vector2(80, 20);
@@ -19,7 +19,7 @@ public class LoadingManager : Singleton<LoadingManager>
 
     private IEnumerator Fade(float targetAlpha)
     {
-        isFade = true;
+        //isFade = true;
         fadeCanvasGroup.blocksRaycasts = true;
         idle.position = startPos;
         float speed = Mathf.Abs(fadeCanvasGroup.alpha - targetAlpha) / fadeDuration;
@@ -33,7 +33,7 @@ public class LoadingManager : Singleton<LoadingManager>
             yield return null;
         }
         fadeCanvasGroup.blocksRaycasts = false;
-        isFade = false;
+        //isFade = false;
         loadingImage.SetActive(false);
     }
 

@@ -1,5 +1,6 @@
-using MapManager;
+﻿using MapManager;
 using System.Collections;
+using System.Text;
 using ElementManager;
 using UnityEngine;
 using Photon.Pun;
@@ -79,8 +80,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //GameController.Instance.UpdateCeil();
         Debug.Log($"Idx is {id}");
         Debug.Log($"tokens is{tokens.Count}");
-        if (map == null) { Debug.Log("mapNull"); }
-        else Debug.Log(map.cells.Length);
+        Debug.Log($"MapLength:{map.size}");
+        map = GameController.Instance.map;
+        Debug.Log($"MapLength:{map.size}");
         new ElementManager.ElementManager().Reaction(id, tokens, map.cells[nowPosIndex]);
         string playerElement = $"element {id}";
         if ((int)tokens[$"element {id}"] <= 0)
@@ -97,10 +99,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         table.Add("isFoul", isFoul);
         table.Add("playerFinish", GameCycleControler.Instance.playerFinish);
         PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+
         MapGenerator.Instance.UpdateCeil(map, nowPosIndex, id);
-        GameController.Instance.UpdateMapDataToGameController(map);
         //SerializeMapData(map,map.cells);
-        GameController.Instance.ChangeMapData(map,map.cells);
+        ChangeMapData(map, map.cells);
     }
 
     public int NowPos() { return nowPosIndex % 16; }
@@ -132,6 +134,70 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void UpdateMapDataToPlayer(Map _map)
     {
         map = _map;
+
+    }
+
+
+
+
+    [PunRPC]
+    public void UpdateMapData(byte[] mapDataBytes, byte[] cellsDataBytes, string originalHash)
+    {
+        string receivedHash = CalculateHash(mapDataBytes);
+        if (receivedHash == originalHash)
+        {
+            string jsonData = System.Text.Encoding.UTF8.GetString(mapDataBytes);
+            Map receivedMapData = JsonUtility.FromJson<Map>(jsonData);
+            map = receivedMapData;
+            Debug.Log($"Data.Lengthis:{jsonData.Length}");
+            Debug.Log($"Data:{jsonData}");
+            GameController.Instance.UpdateMapDataToGameController(map);
+        }
+        else
+        {
+            Debug.Log("Serialize and Deserialize Fail");
+            Debug.Log($"original file length is :{originalHash.Length},recieve file is :{receivedHash.Length}");
+        }
+        //string cellsData = System.Text.Encoding.UTF8.GetString(cellsDataBytes);
+        //map.cells = JsonUtility.FromJson<Cell[]>(cellsData);
+        Debug.Log($"map:{map.size},ceil:{map.cells.Length}");
+    }
+
+    public void ChangeMapData(Map newMapData, Cell[] cellData)
+    {
+        string jsonData = JsonUtility.ToJson(newMapData);
+        byte[] byteData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+
+        string cellsData = JsonUtility.ToJson(cellData);
+        byte[] cellsByteData = System.Text.Encoding.UTF8.GetBytes(cellsData);
+        string originalHash = CalculateHash(byteData);
+        photonView.RPC("UpdateMapData", RpcTarget.Others, byteData, cellsByteData, originalHash);
+    }
+
+    string CalculateHash(byte[] data)
+    {
+        using (var md5 = System.Security.Cryptography.MD5.Create())
+        {
+            byte[] hashBytes = md5.ComputeHash(data);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hashBytes.Length; i++)
+            {
+                sb.Append(hashBytes[i].ToString("x2")); // Convert each byte to two digits of hexadecimal
+            }
+            return sb.ToString();
+        }
+    }
+
+
+    public void SignalTextToEveryPlayer(string text)
+    {
+        photonView.RPC("SynchronizeText", RpcTarget.Others, text);
+    }
+
+    [PunRPC]
+    private void SynchronizeText(string text)
+    {
+        SignalUI.Instance.SignalText(text);
     }
 
 
