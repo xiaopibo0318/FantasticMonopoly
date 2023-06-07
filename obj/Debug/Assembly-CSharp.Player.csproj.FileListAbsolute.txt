@@ -1,2 +1,0 @@
-/home/maxx/RiderProjects/FantasticMonopoly/obj/Debug/Assembly-CSharp.Player.csproj.AssemblyReference.cache
-/home/maxx/RiderProjects/FantasticMonopoly/obj/Debug/Assembly-CSharp.Player.csproj.CoreCompileInputs.cache

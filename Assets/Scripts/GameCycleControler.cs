@@ -23,7 +23,7 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
     {
         Instance = this;
     }
-    
+
     // Start method called before the first frame update
     void Start()
     {
@@ -33,7 +33,8 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
         gameCoroutine = StartCoroutine(GameCycle());
     }
 
-    private IEnumerator GameCycle(){
+    private IEnumerator GameCycle()
+    {
         Debug.Log("Start Cycle");
         // Get the number of rounds left from GameController
         int totalRound = GameController.Instance.totalRound;
@@ -64,6 +65,7 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
         // Log end of game and make dice button non-interactable
         UiController.Instance.UpdateInfo(roundLeft, totalRound);
         Debug.Log("End Game");
+        SignalUI.Instance.SignalText("End Game");
         UiController.Instance.DiceButtonInteractable(false);
     }
 
@@ -72,10 +74,11 @@ public class GameCycleControler : MonoBehaviourPunCallbacks
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
     {
         // Detect Validity
-        if(!(changedProps.ContainsKey("playerElement") && changedProps.ContainsKey("playerFinish") && changedProps.ContainsKey("playerPos")))
+        if (!(changedProps.ContainsKey("playerElement") && changedProps.ContainsKey("playerFinish") && changedProps.ContainsKey("playerPos")))
             return;
 
-        if(targetPlayer.NickName != PhotonNetwork.LocalPlayer.NickName){
+        if (targetPlayer.NickName != PhotonNetwork.LocalPlayer.NickName)
+        {
             playerFinish = (bool)changedProps["playerFinish"];
             changedProps["playerFinish"] = false;
         }

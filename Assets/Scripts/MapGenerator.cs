@@ -55,7 +55,7 @@ public class MapGenerator : MonoBehaviourPunCallbacks
     }
 
 
-    public void UpdateCeil(Map map, int targetIndex, int elementIdInt)
+    public void UpdateCell(Map map, int targetIndex, int elementIdInt)
     {
         Debug.Log($"is special? :{map.cells[targetIndex].isSpecial}, index is{targetIndex}, playElementId is{elementIdInt}");
         var mapSize = new MapSize();

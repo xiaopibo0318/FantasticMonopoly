@@ -1,2 +1,0 @@
-/home/maxx/RiderProjects/FantasticMonopoly/obj/Debug/UnityEditor.UI.csproj.AssemblyReference.cache
-/home/maxx/RiderProjects/FantasticMonopoly/obj/Debug/UnityEditor.UI.csproj.CoreCompileInputs.cache

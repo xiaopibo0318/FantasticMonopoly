@@ -7,12 +7,10 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using UnityEditor;
 using System.Collections;
-using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using Photon.Realtime;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 using CellManager;
-using UnityEngine.Rendering.VirtualTexturing;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
@@ -41,13 +39,6 @@ public class GameController : MonoBehaviourPunCallbacks
 
 
 
-    /// <summary>
-    /// Game process devide into n steps, 
-    /// </summary>
-    public enum GameState
-    {
-        Menu, Item, Dice, Move, End
-    }
 
 
     /// <summary>
@@ -58,13 +49,14 @@ public class GameController : MonoBehaviourPunCallbacks
         CreatePlayer();
         sortedPlayerList = PhotonNetwork.CurrentRoom.Players.Values.OrderBy(player => player.ActorNumber).ToList();
 
-        int i = 2;
+        int i = 0;
         foreach (Player player in sortedPlayerList)
         {
             if (player.NickName == PhotonNetwork.LocalPlayer.NickName)
             {
                 player1 = new PlayerInfo(i, 10);// ElmentID = 0, tokenNum = 10;
                 PlayerController.LocalPlayerInstance.UpdateMapDataToPlayer(map);
+                PlayerController.LocalPlayerInstance.playerIndex = i;
             }
             i++;
         }
@@ -110,7 +102,7 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
 
-    
+
 
 
 

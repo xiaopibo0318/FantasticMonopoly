@@ -8,6 +8,7 @@ using TMPro;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 using CellManager;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public static PlayerController LocalPlayerInstance; //Local Instance
     private Map map;
 
+    public int playerIndex { get; set; }
     public Animator playerAnimator;
 
 
@@ -100,9 +102,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         table.Add("playerFinish", GameCycleControler.Instance.playerFinish);
         PhotonNetwork.LocalPlayer.SetCustomProperties(table);
 
-        MapGenerator.Instance.UpdateCeil(map, nowPosIndex, id);
+        MapGenerator.Instance.UpdateCell(map, nowPosIndex, id);
         //SerializeMapData(map,map.cells);
-        ChangeMapData(map, map.cells);
+        ChangeMapData(map);
         UpdatePlayerElementData((int)tokens[$"element {id}"]);
     }
 
@@ -142,7 +144,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    public void UpdateMapData(byte[] mapDataBytes, byte[] cellsDataBytes, string originalHash)
+    public void UpdateMapData(byte[] mapDataBytes, string originalHash)
     {
         string receivedHash = CalculateHash(mapDataBytes);
         if (receivedHash == originalHash)
@@ -164,15 +166,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Debug.Log($"map:{map.size},ceil:{map.cells.Length}");
     }
 
-    public void ChangeMapData(Map newMapData, Cell[] cellData)
+    public void ChangeMapData(Map newMapData)
     {
         string jsonData = JsonUtility.ToJson(newMapData);
         byte[] byteData = System.Text.Encoding.UTF8.GetBytes(jsonData);
-
-        string cellsData = JsonUtility.ToJson(cellData);
-        byte[] cellsByteData = System.Text.Encoding.UTF8.GetBytes(cellsData);
         string originalHash = CalculateHash(byteData);
-        photonView.RPC("UpdateMapData", RpcTarget.Others, byteData, cellsByteData, originalHash);
+        photonView.RPC("UpdateMapData", RpcTarget.Others, byteData, originalHash);
     }
 
     string CalculateHash(byte[] data)
@@ -209,7 +208,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private void UpdatePlayerElementData(int num)
     {
-        UiController.Instance.UpdatePlayerViewData(id, num);
+        UiController.Instance.UpdatePlayerViewData(id, num, playerIndex); //LocalPlayers 
+        photonView.RPC("UpdateTokensDataToAllPlayers", RpcTarget.Others, id, num, tokens); // Others Players
+    }
+
+    [PunRPC]
+    private void UpdateTokensDataToAllPlayers(int elementId, int num, HashTable _tokens)
+    {
+        UiController.Instance.UpdatePlayerViewData(id, num, playerIndex);
     }
 
 }

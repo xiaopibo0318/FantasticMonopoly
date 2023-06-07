@@ -26,6 +26,8 @@ public class UiController : Singleton<UiController>
     [SerializeField] private Transform playerInfoParent;
     private GameObject viewObject;
 
+    private List<GameObject> playerInfoList = new List<GameObject>();
+
     private void Start()
     {
         InitButton();
@@ -78,6 +80,7 @@ public class UiController : Singleton<UiController>
                 }
             }
             viewObject = myObject;
+            playerInfoList.Add(myObject);
         }
     }
 
@@ -93,9 +96,12 @@ public class UiController : Singleton<UiController>
         action?.Invoke();
     }
 
-    public void UpdatePlayerViewData(int i, int num)
+    public void UpdatePlayerViewData(int elementIndex, int num, int targetPlayerID)
     {
-        viewObject.GetComponent<PlayerViewManager>().elementNum[i].text = num.ToString();
+        var x = playerInfoList[targetPlayerID].GetComponent<PlayerViewManager>();
+        x.elementNum[elementIndex].text = num.ToString();
     }
+
+
 
 }
