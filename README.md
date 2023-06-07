@@ -13,4 +13,4 @@ Requirement: git, Unity Hub
 
 # 程式碼存放位置
 程式碼存放在 FantasticMonopoly/Assest/Scripts裡 
-裡面的cs檔案即是我們的腳本
+裡面的cs檔案即是我們的程式碼
