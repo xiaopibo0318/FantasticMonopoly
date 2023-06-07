@@ -296,6 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map:
     size: 0
+    cells: []
   playerPrefab: {fileID: 4003678116964979415, guid: 33976c6aab816284a9483c454347a32b, type: 3}
   playerNameList: []
 --- !u!1 &423027151
@@ -358,11 +359,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 6a21c57e7668050428b1ad91dd2fb7f2, type: 3}
-    m_FontSize: 20
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 40
+    m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -414,7 +415,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -9.8, y: 0}
+  m_AnchoredPosition: {x: -9.799988, y: 0}
   m_SizeDelta: {x: 15, y: 15}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &492057733
@@ -655,7 +656,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &804749215
 MonoBehaviour:
@@ -704,8 +705,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 72
+  m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1005,8 +1006,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.0000047684, y: -7.100006}
-  m_SizeDelta: {x: 370.573, y: 40.6914}
+  m_AnchoredPosition: {x: 0.0000047684, y: -28}
+  m_SizeDelta: {x: 750, y: 80}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1628559893
 MonoBehaviour:
@@ -1214,7 +1215,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 600, y: 20}
-  m_SizeDelta: {x: 60, y: 80}
+  m_SizeDelta: {x: 150, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1734491421
 MonoBehaviour:

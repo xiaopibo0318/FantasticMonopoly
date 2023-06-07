@@ -23,7 +23,7 @@ public class SignalUI : MonoBehaviourPunCallbacks
         ResetSignal();
     }
 
-    public void SignalText(string myText, int signalTime = 5, int textFontSize = 20, bool canSkip = true)
+    public void SignalText(string myText, int signalTime = 5, int textFontSize = 72, bool canSkip = true)
     {
         if (canSkip == true) skipButton.gameObject.SetActive(true);
         else skipButton.gameObject.SetActive(false);

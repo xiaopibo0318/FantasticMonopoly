@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private IEnumerator GoWalk(int amount)
     {
-        SignalUI.Instance.SignalText($"{pv.Owner.NickName} {amount.ToString()}");
+        SignalUI.Instance.SignalText($"{pv.Owner.NickName} get {amount.ToString()}");
         CameraController.Instance.ViewSwitch("overLook");
         Debug.Log($"NowIndex is {nowPosIndex}");
         var posOffset = new Vector3(-10, -20, 0);
